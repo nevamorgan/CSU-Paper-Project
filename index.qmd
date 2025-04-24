@@ -151,7 +151,9 @@ library(gridExtra)
 
 ```
 
-**Methods** \#### Methods Narrative:
+**Methods** 
+
+#### Methods Narrative:
 
 To examine the effects climate change will have on the migratory timing
 of the American Bittern, we used a monthly summary of climate data from
@@ -640,25 +642,3 @@ ggplot(combined_long, aes(x = year, y = value, color = season)) +
 ```
 
 
-**Results:**
-
-Precipitation in Fall, Winter, and Spring varied greatly from year to year, and the Fall and Winter seasons show an overall increase in the past 25 years. Spring and Summer show a less dramatic decrease.
-
-All seasons but Spring showed a several degree increase in average temperature since 2000,
-
-The correlation graph displays the relationship between average seasonal temperature (°F) and the number of Bittern observations, with separate linear trends plotted for each season. The visualized data reveals distinct seasonal patterns in both temperature and observations. 
-
-During Winter, average temperatures ranged from approximately 37°F to 47°F, with Bittern observations generally below 1,000. A slight positive trend was noted, suggesting a weak relationship between increasing temperature and higher observations. In Spring, temperatures were around 50°F to 58°F. Although this season had the highest overall number of Bittern observations—with some counts exceeding 2,000—there was a slight negative trend in the linear fit, indicating that the number of Bittern observations tended to decrease slightly with increasing temperature. 
-Fall showed a moderate positive trend, with observations increasing alongside temperatures ranging from 52°F to 59°F. However, overall observations remained lower compared to Spring and Summer. Summer displayed the strongest positive trend. As temperatures increased from 67°F to 74°F, Bittern observations increased significantly. This season also showed more consistent and clustered high observations, suggesting a stronger relationship between higher temperatures and increased presence of Bitterns.
-
-**Discussion**
-
-These results suggest that seasonal temperature plays a variable role in Bittern observations, likely reflecting differences in migratory behavior, breeding activity, and habitat use throughout the year.
-
-The strong positive trend in Summer may indicate that Bitterns are more active or easier to observe during warmer months, potentially due to breeding activity or greater availability of wetland habitats. Similarly, the positive trend in Fall could reflect pre-migration behavior or favorable foraging conditions as temperatures cool.
-
-The Spring season, despite having the highest individual observation counts, showed a slight negative trend. This may reflect a peak in migration or nesting activity occurring at lower spring temperatures, after which observations decline as temperatures rise.
-
-Winter observations were consistently low, which aligns with the species' known migratory behavior—many populations leave colder regions during winter months. The weak positive correlation may suggest that in relatively milder winters, some individuals remain present or return earlier.
-
-Overall, this analysis underscores how temperature and seasonality can influence bird detection and presence. Further investigation into habitat variables, precipitation, and food availability could clarify the mechanisms behind these seasonal patterns. Understanding these relationships is especially important in the context of climate change, which may shift seasonal temperature regimes and, in turn, influence Bittern migration and habitat use.
