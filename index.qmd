@@ -22,58 +22,49 @@ editor:
     wrap: 72
 ---
 
-#### **Title:**
+## **Title:**
 
-Flight in Flux: Analyzing American Bittern (Botaurus lentiginosus)
-Migration Timing and Climate Change
+### **Flight in Flux:** Analyzing American Bittern (Botaurus lentiginosus) Migration Timing and Climate Change
 
-**Introduction:** Climate change poses many questions relating to
-systems across the globe, especially ecological and evolutionary
-systems. One system which could potentially be heavily impacted is
-migration. Bird migration timing is critical for ensuring species
-survival and ecological balance. As anthropogenic climate change has
-altered seasonal patterns, there is a potential disruption to migration
-timing, impacting birds' breeding success, food availability, and
-overall population health. The American Bittern (Botaurus lentiginosus),
-for example, depends on the thriving vegetation of marshlands for
-camouflage and nesting, as they are known to nest on the ground. Wetland
-birds are expected to be affected negatively by a considerable margin
-with the presence of a changing climate altering their regular migratory
-ranges and patterns (Steen et al., 2012).
+#### **Introduction:** 
 
-**Abstract/Background:** The American Bittern is a solitary, cryptic
-species that relies on wetlands for breeding and overwintering.
-Typically, these birds breed in freshwater marshes across Canada and the
-northern United States before migrating south to the southeastern U.S.,
-Mexico, and Central America for the winter. However, increasing global
-temperatures, shifts in precipitation, and habitat loss due to climate
-change threaten to disrupt these migration patterns. Past studies on
-migratory birds indicate that climate change is leading to earlier
-spring arrivals, delayed fall departures, and shifts in overall
-migration routes (La Sorte & Thompson, 2007). For wetland-dependent
-birds like the American Bittern, changes in water levels due to altered
-precipitation cycles could further complicate their ability to find
-suitable stopover sites and breeding grounds. Given that wetlands are
-already among the most threatened ecosystems in North America, with
-significant losses due to urbanization and agriculture, climate-induced
-changes pose an additional challenge (Dahl, 2011). Studying the
-migration patterns of the American Bittern under a changing climate is
-essential for predicting future population trends and informing
-conservation strategies. By understanding how climate variables
-influence their movements, conservationists can prioritize habitat
-protection, restoration, and adaptive management to mitigate potential
-negative impacts.
+Climate change poses many questions relating to systems across the
+globe, especially ecological and evolutionary systems. One system which
+could potentially be heavily impacted is migration. Bird migration
+timing is critical for ensuring species survival and ecological balance.
+As anthropogenic climate change has altered seasonal patterns, there is
+a potential disruption to migration timing, impacting birds' breeding
+success, food availability, and overall population health. The American
+Bittern (Botaurus lentiginosus), for example, depends on the thriving
+vegetation of marshlands for camouflage and nesting, as they are known
+to nest on the ground. Wetland birds are expected to be affected
+negatively by a considerable margin with the presence of a changing
+climate altering their regular migratory ranges and patterns (Steen et
+al., 2012).
 
-**Sources:** American bittern overview, all about birds, Cornell Lab of
-Ornithology. Overview, All About Birds, Cornell Lab of Ornithology.
-(n.d.). https://www.allaboutbirds.org/guide/American_Bittern/overview
+#### **Abstract:** 
 
-Dahl, T. E. (2011). Status and trends of wetlands in the conterminous
-United States 2004 to 2009. US Department of the Interior, US Fish and
-Wildlife Service, Fisheries and Habitat Conservation.
-
-La Sorte, F. A., & Thompson III, F. R. (2007). Poleward shifts in winter
-ranges of North American birds. Ecology, 88(7), 1803-1812.
+The American Bittern is a solitary, cryptic species that relies on
+wetlands for breeding and overwintering. Typically, these birds breed in
+freshwater marshes across Canada and the northern United States before
+migrating south to the southeastern U.S., Mexico, and Central America
+for the winter. However, increasing global temperatures, shifts in
+precipitation, and habitat loss due to climate change threaten to
+disrupt these migration patterns. Past studies on migratory birds
+indicate that climate change is leading to earlier spring arrivals,
+delayed fall departures, and shifts in overall migration routes (La
+Sorte & Thompson, 2007). For wetland-dependent birds like the American
+Bittern, changes in water levels due to altered precipitation cycles
+could further complicate their ability to find suitable stopover sites
+and breeding grounds. Given that wetlands are already among the most
+threatened ecosystems in North America, with significant losses due to
+urbanization and agriculture, climate-induced changes pose an additional
+challenge (Dahl, 2011). Studying the migration patterns of the American
+Bittern under a changing climate is essential for predicting future
+population trends and informing conservation strategies. By
+understanding how climate variables influence their movements,
+conservationists can prioritize habitat protection, restoration, and
+adaptive management to mitigate potential negative impacts.
 
 **Motivation:** Bird migration range and timing is critical for ensuring
 species survival and ecological balance. However, climate change has
@@ -84,7 +75,7 @@ and mitigate risks to migratory bird species. Additionally, information
 gained from analyzing one species can be used to make inferences about
 the potential shifts in other similar species.
 
-**Data**
+#### **Data**
 
 Climate Data Online (NOAA Global Summary of the Month - U.S. Specific)
 
@@ -151,9 +142,7 @@ library(gridExtra)
 
 ```
 
-**Methods** 
-
-#### Methods Narrative:
+#### **Methods**
 
 To examine the effects climate change will have on the migratory timing
 of the American Bittern, we used a monthly summary of climate data from
@@ -170,7 +159,7 @@ cleaned this data, removing unnecessary attributes for our study,
 converting units to be consistent throughout each dataset, and removing
 unnecessary data from past years to focus on data between 2000-2024.
 
-Data Processing / Seasonal Aggregation
+Data Processing / Seasonal Aggregation:
 
 Each weather station recorded the seasonal averages of temperature and
 precipitation, which were then manipulated into a cleaned version of
@@ -185,7 +174,7 @@ The seasonal component was also applied to the American Bittern
 migration dataframe, which was later converted to a tibble for later
 analysis.
 
-Migratory Timing Analysis of American Bittern
+Migratory Timing Analysis of American Bittern:
 
 Observational data was provided to understand the timing of Bitterns
 within our four selected states, by grouping month and year to
@@ -193,7 +182,8 @@ understand temporal patterns of their appearance based on the seasonal
 presence. Using a time series visualization to detect changes within the
 migratory patterns based on their seasonality between 2000-2024.
 
-Comparing Seasonal Trends of Climate Variability and Bittern Observation
+Comparing Seasonal Trends of Climate Variability and Bittern
+Observation:
 
 To understand the correlation between seasonal changes for all the
 weather stations, we averaged the temperature and precipitation of each
@@ -641,26 +631,78 @@ ggplot(combined_long, aes(x = year, y = value, color = season)) +
 
 ```
 
+#### **Results:**
 
-**Results:**
+Precipitation in Fall, Winter, and Spring varied greatly from year to
+year, and the Fall and Winter seasons show an overall increase in the
+past 25 years. Spring and Summer show a less dramatic decrease.
 
-Precipitation in Fall, Winter, and Spring varied greatly from year to year, and the Fall and Winter seasons show an overall increase in the past 25 years. Spring and Summer show a less dramatic decrease.
+All seasons but Spring showed a several degree increase in average
+temperature since 2000,
 
-All seasons but Spring showed a several degree increase in average temperature since 2000,
+The correlation graph displays the relationship between average seasonal
+temperature (°F) and the number of Bittern observations, with separate
+linear trends plotted for each season. The visualized data reveals
+distinct seasonal patterns in both temperature and observations.
 
-The correlation graph displays the relationship between average seasonal temperature (°F) and the number of Bittern observations, with separate linear trends plotted for each season. The visualized data reveals distinct seasonal patterns in both temperature and observations. 
+During Winter, average temperatures ranged from approximately 37°F to
+47°F, with Bittern observations generally below 1,000. A slight positive
+trend was noted, suggesting a weak relationship between increasing
+temperature and higher observations. In Spring, temperatures were around
+50°F to 58°F. Although this season had the highest overall number of
+Bittern observations—with some counts exceeding 2,000—there was a slight
+negative trend in the linear fit, indicating that the number of Bittern
+observations tended to decrease slightly with increasing temperature.
+Fall showed a moderate positive trend, with observations increasing
+alongside temperatures ranging from 52°F to 59°F. However, overall
+observations remained lower compared to Spring and Summer. Summer
+displayed the strongest positive trend. As temperatures increased from
+67°F to 74°F, Bittern observations increased significantly. This season
+also showed more consistent and clustered high observations, suggesting
+a stronger relationship between higher temperatures and increased
+presence of Bitterns.
 
-During Winter, average temperatures ranged from approximately 37°F to 47°F, with Bittern observations generally below 1,000. A slight positive trend was noted, suggesting a weak relationship between increasing temperature and higher observations. In Spring, temperatures were around 50°F to 58°F. Although this season had the highest overall number of Bittern observations—with some counts exceeding 2,000—there was a slight negative trend in the linear fit, indicating that the number of Bittern observations tended to decrease slightly with increasing temperature. 
-Fall showed a moderate positive trend, with observations increasing alongside temperatures ranging from 52°F to 59°F. However, overall observations remained lower compared to Spring and Summer. Summer displayed the strongest positive trend. As temperatures increased from 67°F to 74°F, Bittern observations increased significantly. This season also showed more consistent and clustered high observations, suggesting a stronger relationship between higher temperatures and increased presence of Bitterns.
+#### **Discussion:**
 
-**Discussion**
+These results suggest that seasonal temperature plays a variable role in
+Bittern observations, likely reflecting differences in migratory
+behavior, breeding activity, and habitat use throughout the year.
 
-These results suggest that seasonal temperature plays a variable role in Bittern observations, likely reflecting differences in migratory behavior, breeding activity, and habitat use throughout the year.
+The strong positive trend in Summer may indicate that Bitterns are more
+active or easier to observe during warmer months, potentially due to
+breeding activity or greater availability of wetland habitats.
+Similarly, the positive trend in Fall could reflect pre-migration
+behavior or favorable foraging conditions as temperatures cool.
 
-The strong positive trend in Summer may indicate that Bitterns are more active or easier to observe during warmer months, potentially due to breeding activity or greater availability of wetland habitats. Similarly, the positive trend in Fall could reflect pre-migration behavior or favorable foraging conditions as temperatures cool.
+The Spring season, despite having the highest individual observation
+counts, showed a slight negative trend. This may reflect a peak in
+migration or nesting activity occurring at lower spring temperatures,
+after which observations decline as temperatures rise.
 
-The Spring season, despite having the highest individual observation counts, showed a slight negative trend. This may reflect a peak in migration or nesting activity occurring at lower spring temperatures, after which observations decline as temperatures rise.
+Winter observations were consistently low, which aligns with the
+species' known migratory behavior—many populations leave colder regions
+during winter months. The weak positive correlation may suggest that in
+relatively milder winters, some individuals remain present or return
+earlier.
 
-Winter observations were consistently low, which aligns with the species' known migratory behavior—many populations leave colder regions during winter months. The weak positive correlation may suggest that in relatively milder winters, some individuals remain present or return earlier.
+Overall, this analysis underscores how temperature and seasonality can
+influence bird detection and presence. Further investigation into
+habitat variables, precipitation, and food availability could clarify
+the mechanisms behind these seasonal patterns. Understanding these
+relationships is especially important in the context of climate change,
+which may shift seasonal temperature regimes and, in turn, influence
+Bittern migration and habitat use.
 
-Overall, this analysis underscores how temperature and seasonality can influence bird detection and presence. Further investigation into habitat variables, precipitation, and food availability could clarify the mechanisms behind these seasonal patterns. Understanding these relationships is especially important in the context of climate change, which may shift seasonal temperature regimes and, in turn, influence Bittern migration and habitat use.
+#### **References:**
+
+Status and trends of wetlands in the conterminous United States 2004 to
+2009. US Department of the Interior, US Fish and Wildlife Service,
+Fisheries and Habitat Conservation.
+
+eBird. (2025). eBird: An online database of bird distribution and
+abundance \[web application\]. eBird, Cornell Lab of Ornithology,
+Ithaca, New York. Available: http://www.ebird.org. (Accessed: April 16,
+2025).
+
+La Sorte, F. A., & Thompson III, F. R. (2007). Poleward shifts in winter
+ranges of North American birds. Ecology, 88(7), 1803-1812.
