@@ -176,7 +176,8 @@ month per year. We then evaluated the long-term changes in bittern
 observation from plot layouts used before, by visually plotting the
 changes in the presence of climate seasonality.
 
-#### Coding Component:
+#### Coding Methods:
+
 Beginning Mumbo Jumbo Libraries:
 
 ```{r}
@@ -191,7 +192,6 @@ library(dplyr)
 library(lubridate) 
 library(tidyr) 
 library(gridExtra) 
-library(gapminder)
 ```
 
 1.  Create time period for seasons
@@ -353,7 +353,7 @@ avg_prec <- climate_data %>%
 
 a.  Temperature Difference between 2000 - 2024 based on seasonality
 
-```{r}
+```{r fig.cap="Average seasonal temperatures (°F) at nine selected climate stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
 #TEMPERATURE!!!
 
 
@@ -382,6 +382,9 @@ ggplot(avg_temp_map %>% filter(season_year >= 2000 & season_year <= 2024)) +
        x = "", y = "") +
   theme_minimal()
 
+```
+
+```{r fig.cap="Average seasonal temperatures (°F) at nine selected climate stations across Arizona, California, Oregon, and Washington. Recorded from January 1st, 2000 to December 31st, 2000. Faceted by season.", fig.align='center'}
 
 # Let's compare first just what 2000 vs 2024 looks like!
 
@@ -400,15 +403,11 @@ temp_2000 <- ggplot(avg_temp_2000) +
   facet_wrap(~season) +
   labs(title = "Seasonal Average Temperatures (2000)",
        x = "",
-       y = "",
-       tag = "Figure 1: This is a test note") +
-  coord_cartesian(clip = "off") +
-  theme(plot.title = element_text(hjust = 0.5),
-          plot.margin = margin(t = 10, r = 10, b = 40, l = 10),
-          plot.tag.position = c(0.2, -0.1)
-          ) +
+       y = "")+
   theme_minimal()
+```
 
+```{r fig.cap="Average seasonal temperatures (°F) at nine selected weather stations across Arizona, California, Oregon, and Washington. Recorded from January 1st, 2024 to December 31st, 2024. Faceted by season.", fig.align='center'}
 # Create the ggplot for 2024
 temp_2024 <- ggplot(avg_temp_2024) +
   geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
@@ -420,9 +419,10 @@ temp_2024 <- ggplot(avg_temp_2024) +
   labs(title = "Seasonal Average Temperatures (2024)",
        x = "", y = "") +
   theme_minimal()
+```
 
 
-
+```{r fig.cap="Average seasonal temperatures (°F) at nine selected weather stations across Arizona, California, Oregon, and Washington combined to show difference side by side. Faceted by season, featuring 2000 and 2024 temperature data.", fig.align='center'}
 # Arrange them to be side by side!
 
 
@@ -430,16 +430,19 @@ grid.arrange(temp_2000, temp_2024, ncol = 2)
 
 ```
 
+
+
+
 b.  Precipitation Difference between 2000 - 2024 based on seasonality
 
-```{r}
+```{r fig.cap="Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington from 2000–2024.", faceted by season.}
 #PRECIPITATION!!!
 
 #joining the two to relay to the map
 avg_prec_map <- avg_prec %>%
   left_join(station_coords, by = "STATION")
 
-#Creating map of avg temperature for Selected stations based on seasonality!
+#Creating map of avg precipitation for Selected stations based on seasonality!
 
 ggplot(avg_prec_map %>% filter(season_year >= 2000 & season_year <= 2024)) +
   geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
@@ -454,7 +457,9 @@ ggplot(avg_prec_map %>% filter(season_year >= 2000 & season_year <= 2024)) +
        x = "", y = "") +
   theme_minimal()
 
+```
 
+```{r fig.cap="Average seasonal precipitation (100μm) at nine selected climate stations across Arizona, California, Oregon, and Washington. Recorded from January 1st, 2000 to December 31st, 2000. Faceted by season.", fig.align='center'}
 # Let's compare first just what 2000 vs 2024 looks like!
 
 # separating 2000 and 2024
@@ -474,6 +479,9 @@ prec_2000 <- ggplot(avg_prec_2000) +
        x = "", y = "") +
   theme_minimal()
 
+```
+
+```{r fig.cap="Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington. Recorded from January 1st, 2024 to December 31st, 2024. Faceted by season.", fig.align='center'}
 # Create the ggplot for 2024
 prec_2024 <- ggplot(avg_prec_2024) +
   geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
@@ -486,14 +494,17 @@ prec_2024 <- ggplot(avg_prec_2024) +
        x = "", y = "") +
   theme_minimal()
 
+```
 
+
+```{r fig.cap="Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington combined to show difference side by side. Faceted by season, featuring 2000 and 2024 precipitation data.", fig.align='center'}
 
 # Arrange them to be side by side!
 
 grid.arrange(prec_2000, prec_2024, ncol = 2)
-
-
 ```
+
+
 
 3.  Bird migration pattern time!
 
@@ -519,9 +530,10 @@ amebit_monthly <- amebit_data %>%
   summarize(observations = n(), .groups = "drop") %>%
   filter(year >= 2000, year <= 2024)
 
+```
 
 
-
+```{r fig.cap="Observation trends of American Bitterns measured monthly from 2000 to 2024 within the four selected states: Arizona, California, Oregon, and Washington. Measured by eBird data analysts.", fig.align='center'}
 # Visualize time:
 
 ggplot(amebit_monthly, aes(x = month, y = observations, group = year, color = as.factor(year))) +
@@ -534,12 +546,12 @@ ggplot(amebit_monthly, aes(x = month, y = observations, group = year, color = as
   ) +
   theme_minimal()
 
-
 ```
+
 
 4.  Looking at seasonal changes over time
 
-```{r}
+```{rfig.cap="Seasonal trends of average temperature ((°F)) and precipitation (mm) as recorded by the nine weather stations in Arizona, California, Oregon, and Washington. Recorded between 2000 and 2024.", fig.align='center'}
 
 seasonal_summary <- climate_data %>%
   mutate(
@@ -577,9 +589,11 @@ ggplot(long_summary, aes(x = season_year, y = value, color = season)) +
 
 ```
 
+
+
 5.  Let's combine them to see if there is a difference!
 
-```{r}
+```{r fig.cap="Average temperature of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average temperature measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
 # Adding seasonality to American Bittern data:
 
 amebit_season <- amebit_monthly %>%
@@ -599,7 +613,7 @@ combined_data <- left_join(amebit_season, seasonal_summary,
                            by = c("year" = "season_year", "season"))
 
 
-# Visualize temperature and precipitation seasonality and bittern data:
+# Visualize temperature seasonality and bittern data:
 
 ggplot(combined_data, aes(x = avg_temp, y = total_obs, color = season)) +
   geom_point() +
@@ -612,6 +626,12 @@ ggplot(combined_data, aes(x = avg_temp, y = total_obs, color = season)) +
   scale_color_brewer(palette = "Set2") +
   theme_minimal()
 
+```
+
+```{r fig.cap="Average precipitation (mm) of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average precipitation measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
+
+# Visualize precipitation seasonality and bittern data:
+
 ggplot(combined_data, aes(x = avg_precp, y = total_obs, color = season)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
@@ -622,8 +642,12 @@ ggplot(combined_data, aes(x = avg_precp, y = total_obs, color = season)) +
   ) +
   scale_color_brewer(palette = "Set2") +
   theme_minimal()
+```
 
 
+
+
+```{r fig.cap="Seasonality shifts of average temperature, precipitation, and number of American Bittern observations recorded yearly from 2000-2024. Data was recorded within nine weather stations across Arizona, California, Oregon, and Washington, including eBird observation count recorded between 2000 and 2024 for the respective states.", fig.align='center'}
 # Relationship between climate and bittern evolving together!
 
 combined_long <- combined_data %>%
@@ -645,9 +669,8 @@ ggplot(combined_long, aes(x = year, y = value, color = season)) +
   scale_color_brewer(palette = "Set2") +
   theme_minimal()
 
-
-
 ```
+
 
 #### **Results:**
 
