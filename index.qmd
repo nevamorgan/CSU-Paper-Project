@@ -352,7 +352,7 @@ avg_prec <- climate_data %>%
 
 a.  Temperature Difference between 2000 - 2024 based on seasonality
 
-```{r fig.cap="Average seasonal temperatures (°F) at nine selected climate stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
+```{r fig.cap="Figure 1: Average seasonal temperatures (°F) at nine selected climate stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
 #TEMPERATURE!!!
 
 
@@ -421,9 +421,8 @@ temp_2024 <- ggplot(avg_temp_2024) +
 ```
 
 
-```{r fig.cap="Average seasonal temperatures (°F) at nine selected weather stations across Arizona, California, Oregon, and Washington combined to show difference side by side. Faceted by season, featuring 2000 and 2024 temperature data.", fig.align='center'}
+```{r fig.cap="Figure 2: Average seasonal temperatures (°F) at nine selected weather stations across Arizona, California, Oregon, and Washington combined to show difference side by side. Faceted by season, featuring 2000 and 2024 temperature data.", fig.align='center'}
 # Arrange them to be side by side!
-
 
 grid.arrange(temp_2000, temp_2024, ncol = 2)
 
@@ -434,7 +433,7 @@ grid.arrange(temp_2000, temp_2024, ncol = 2)
 
 b.  Precipitation Difference between 2000 - 2024 based on seasonality
 
-```{r fig.cap="Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
+```{r fig.cap="Figure 3: Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
 #PRECIPITATION!!!
 
 #joining the two to relay to the map
@@ -496,7 +495,7 @@ prec_2024 <- ggplot(avg_prec_2024) +
 ```
 
 
-```{r fig.cap="Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington combined to show difference side by side. Faceted by season, featuring 2000 and 2024 precipitation data.", fig.align='center'}
+```{r fig.cap="Figure 4: Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington combined to show difference side by side. Faceted by season, featuring 2000 and 2024 precipitation data.", fig.align='center'}
 
 # Arrange them to be side by side!
 
@@ -531,7 +530,7 @@ amebit_monthly <- amebit_data %>%
 ```
 
 
-```{r fig.cap="Observation trends of American Bitterns measured monthly from 2000 to 2024 within the four selected states: Arizona, California, Oregon, and Washington. Measured by eBird data analysts.", fig.align='center'}
+```{r fig.cap="Figure 5: Observation trends of American Bitterns measured monthly from 2000 to 2024 within the four selected states: Arizona, California, Oregon, and Washington. Measured by eBird data analysts.", fig.align='center'}
 # Visualize time:
 
 ggplot(amebit_monthly, aes(x = month, y = observations, group = year, color = as.factor(year))) +
@@ -549,7 +548,7 @@ ggplot(amebit_monthly, aes(x = month, y = observations, group = year, color = as
 
 4.  Looking at seasonal changes over time
 
-```{r fig.cap="Seasonal trends of average temperature ((°F)) and precipitation (mm) as recorded by the nine weather stations in Arizona, California, Oregon, and Washington. Recorded between 2000 and 2024.", fig.align='center'}
+```{r fig.cap="Figure 6: Seasonal trends of average temperature ((°F)) and precipitation (mm) as recorded by the nine weather stations in Arizona, California, Oregon, and Washington. Recorded between 2000 and 2024.", fig.align='center'}
 
 seasonal_summary <- climate_data %>%
   mutate(
@@ -591,7 +590,7 @@ ggplot(long_summary, aes(x = season_year, y = value, color = season)) +
 
 5.  Let's combine them to see if there is a difference!
 
-```{r fig.cap="Average temperature of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average temperature measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
+```{r fig.cap="Figure 7: Average temperature of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average temperature measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
 # Adding seasonality to American Bittern data:
 
 amebit_season <- amebit_monthly %>%
@@ -627,7 +626,7 @@ ggplot(combined_data, aes(x = avg_temp, y = total_obs, color = season)) +
 ```
 
 
-```{r fig.cap="Average precipitation (mm) of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average precipitation measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
+```{r fig.cap="Figure 8: Average precipitation (mm) of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average precipitation measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
 
 # Visualize precipitation seasonality and bittern data:
 
@@ -644,7 +643,7 @@ ggplot(combined_data, aes(x = avg_precp, y = total_obs, color = season)) +
 ```
 
 
-```{r fig.cap="Seasonality shifts of average temperature, precipitation, and number of American Bittern observations recorded yearly from 2000-2024. Data was recorded within nine weather stations across Arizona, California, Oregon, and Washington, including eBird observation count recorded between 2000 and 2024 for the respective states.", fig.align='center'}
+```{r fig.cap="Figure 9: Seasonality shifts of average temperature, precipitation, and number of American Bittern observations recorded yearly from 2000-2024. Data was recorded within nine weather stations across Arizona, California, Oregon, and Washington, including eBird observation count recorded between 2000 and 2024 for the respective states.", fig.align='center'}
 # Relationship between climate and bittern evolving together!
 
 combined_long <- combined_data %>%
