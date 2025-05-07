@@ -551,7 +551,7 @@ ggplot(amebit_monthly, aes(x = month, y = observations, group = year, color = as
 
 4.  Looking at seasonal changes over time
 
-```{rfig.cap="Seasonal trends of average temperature ((°F)) and precipitation (mm) as recorded by the nine weather stations in Arizona, California, Oregon, and Washington. Recorded between 2000 and 2024.", fig.align='center'}
+```{r fig.cap="Seasonal trends of average temperature ((°F)) and precipitation (mm) as recorded by the nine weather stations in Arizona, California, Oregon, and Washington. Recorded between 2000 and 2024.", fig.align='center'}
 
 seasonal_summary <- climate_data %>%
   mutate(
