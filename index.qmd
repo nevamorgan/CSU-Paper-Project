@@ -3,20 +3,23 @@ project:
   title: "ESS 330 Paper Proposals"
   output-dir: docs
   type: website
+
 format:
-  
   html:
     self-contained: true
+
 authors:
   - name: Mia Colangelo
     affiliation: Colorado State University
     roles: writing
-    corresponding: true
+    corresponding: false
   - name: Neva Morgan
     affiliation: Colorado State University
     roles: writing
-    corresponding: false
+    corresponding: true
+
 bibliography: references.bib
+
 editor: 
   markdown: 
     wrap: 72
@@ -175,8 +178,9 @@ month per year. We then evaluated the long-term changes in bittern
 observation from plot layouts used before, by visually plotting the
 changes in the presence of climate seasonality.
 
-#### Coding Methods:
+#### Results:
 
+##### Coding and Figures:
 Beginning Mumbo Jumbo Libraries:
 
 ```{r}
@@ -352,6 +356,8 @@ avg_prec <- climate_data %>%
 
 a.  Temperature Difference between 2000 - 2024 based on seasonality
 
+The seasonal average temperature varies respectively within each recorded season showing similarities between Fall and Winter temperatures and Spring and Summer temperatures for all nine weather stations (Fig. 1). 
+
 ```{r fig.cap="Figure 1: Average seasonal temperatures (°F) at nine selected climate stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
 #TEMPERATURE!!!
 
@@ -382,6 +388,9 @@ ggplot(avg_temp_map %>% filter(season_year >= 2000 & season_year <= 2024)) +
   theme_minimal()
 
 ```
+
+
+All seasons but Spring showed several degree increase in average temperature from 2000 to 2024 (Fig. 2).
 
 ```{r fig.cap="Average seasonal temperatures (°F) at nine selected climate stations across Arizona, California, Oregon, and Washington. Recorded from January 1st, 2000 to December 31st, 2000. Faceted by season.", fig.align='center'}
 
@@ -428,10 +437,9 @@ grid.arrange(temp_2000, temp_2024, ncol = 2)
 
 ```
 
-
-
-
 b.  Precipitation Difference between 2000 - 2024 based on seasonality
+
+The precipitation average that is experienced between 2000-2024 for all nine weather stations have no stark difference in patterns across all four seasons (Fig. 3), although it is slightly wetter across the western coast weather stations.
 
 ```{r fig.cap="Figure 3: Average seasonal precipitation (100μm) at nine selected weather stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
 #PRECIPITATION!!!
@@ -456,6 +464,8 @@ ggplot(avg_prec_map %>% filter(season_year >= 2000 & season_year <= 2024)) +
   theme_minimal()
 
 ```
+
+Precipitation in the all four seasons, Winter, Spring, Summer, and Fall, has dramatically increased from 2000 to 2024, in the nine respective weather stations (Fig. 4). 
 
 ```{r fig.cap="Average seasonal precipitation (100μm) at nine selected climate stations across Arizona, California, Oregon, and Washington. Recorded from January 1st, 2000 to December 31st, 2000. Faceted by season.", fig.align='center'}
 # Let's compare first just what 2000 vs 2024 looks like!
@@ -501,6 +511,8 @@ prec_2024 <- ggplot(avg_prec_2024) +
 
 grid.arrange(prec_2000, prec_2024, ncol = 2)
 ```
+
+
 
 
 3.  Bird migration pattern time!
@@ -590,6 +602,8 @@ ggplot(long_summary, aes(x = season_year, y = value, color = season)) +
 
 5.  Let's combine them to see if there is a difference!
 
+The correlation graph displays the relationship between average seasonal temperature (°F) and the number of Bittern observations, with separate linear trends plotted for each season. The visualized data reveals distinct seasonal patterns in both temperature and observation count (Fig. 7). Each point representing the yearly average temperature and respective count of American Bitterns.
+
 ```{r fig.cap="Figure 7: Average temperature of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average temperature measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
 # Adding seasonality to American Bittern data:
 
@@ -625,6 +639,7 @@ ggplot(combined_data, aes(x = avg_temp, y = total_obs, color = season)) +
 
 ```
 
+The correlation graph displays the relationship between average seasonal precipitation (mm) and the number of Bittern observations, with separate linear trends plotted for each season. The visualized data reveals distinct seasonal patterns in both precipitation and observation count (Fig. 8). Each point representing the yearly average precipitation and respective count of American Bitterns.
 
 ```{r fig.cap="Figure 8: Average precipitation (mm) of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average precipitation measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
 
@@ -642,6 +657,7 @@ ggplot(combined_data, aes(x = avg_precp, y = total_obs, color = season)) +
   theme_minimal()
 ```
 
+Seasonal shifts in average temperature, precipitation, and number of American Bittern has all increased from 2000 to 2024 (Fig. 9). 
 
 ```{r fig.cap="Figure 9: Seasonality shifts of average temperature, precipitation, and number of American Bittern observations recorded yearly from 2000-2024. Data was recorded within nine weather stations across Arizona, California, Oregon, and Washington, including eBird observation count recorded between 2000 and 2024 for the respective states.", fig.align='center'}
 # Relationship between climate and bittern evolving together!
@@ -670,70 +686,21 @@ ggplot(combined_long, aes(x = year, y = value, color = season)) +
 ```
 
 
+During Winter, average temperatures ranged from approximately 37°F to 47°F, with Bittern observations generally below 1,000 (Fig. 7). A slight positive trend was noted, suggesting a weak relationship between increasing temperature and higher observations (Fig. 9). In Spring, temperatures were around 50°F to 58°F (Fig. 7). Although this season had the highest overall number of Bittern observations—with some counts exceeding 2,000—there was a slight negative trend in the linear fit, indicating that the number of Bittern observations tended to decrease slightly with increasing temperature (Fig. 9). Fall showed a moderate positive trend, with observations increasing alongside temperatures ranging from 52°F to 59°F (Fig. 7). However, overall observations remained lower compared to Spring and Summer (Fig. 7). Summer displayed the strongest positive trend. As temperatures increased from 67°F to 74°F, Bittern observations increased significantly (Fig. 9). This season also showed more consistent and clustered high observations, suggesting a stronger relationship between higher temperatures and increased presence of Bitterns (Fig. 9).
 
-
-
-#### **Results:**
-
-Precipitation in Fall, Winter, and Spring varied greatly from year to
-year, and the Fall and Winter seasons show an overall increase in the
-past 25 years. Spring and Summer show a less dramatic decrease.
-
-All seasons but Spring showed a several degree increase in average
-temperature since 2000,
-
-The correlation graph displays the relationship between average seasonal
-temperature (°F) and the number of Bittern observations, with separate
-linear trends plotted for each season. The visualized data reveals
-distinct seasonal patterns in both temperature and observations.
-
-During Winter, average temperatures ranged from approximately 37°F to
-47°F, with Bittern observations generally below 1,000. A slight positive
-trend was noted, suggesting a weak relationship between increasing
-temperature and higher observations. In Spring, temperatures were around
-50°F to 58°F. Although this season had the highest overall number of
-Bittern observations—with some counts exceeding 2,000—there was a slight
-negative trend in the linear fit, indicating that the number of Bittern
-observations tended to decrease slightly with increasing temperature.
-Fall showed a moderate positive trend, with observations increasing
-alongside temperatures ranging from 52°F to 59°F. However, overall
-observations remained lower compared to Spring and Summer. Summer
-displayed the strongest positive trend. As temperatures increased from
-67°F to 74°F, Bittern observations increased significantly. This season
-also showed more consistent and clustered high observations, suggesting
-a stronger relationship between higher temperatures and increased
-presence of Bitterns.
 
 #### **Discussion:**
 
-These results suggest that seasonal temperature plays a variable role in
-Bittern observations, likely reflecting differences in migratory
-behavior, breeding activity, and habitat use throughout the year.
+These results suggest that seasonal temperature plays a variable role in Bittern observations, likely reflecting differences in migratory behavior, breeding activity, and habitat use throughout the year.
 
-The strong positive trend in Summer may indicate that Bitterns are more
-active or easier to observe during warmer months, potentially due to
-breeding activity or greater availability of wetland habitats.
-Similarly, the positive trend in Fall could reflect pre-migration
-behavior or favorable foraging conditions as temperatures cool.
+The strong positive trend in Summer may indicate that Bitterns are more active or easier to observe during warmer months, potentially due to breeding activity or greater availability of wetland habitats. Similarly, the positive trend in Fall could reflect pre-migration behavior or favorable foraging conditions as temperatures cool.
 
-The Spring season, despite having the highest individual observation
-counts, showed a slight negative trend. This may reflect a peak in
-migration or nesting activity occurring at lower spring temperatures,
-after which observations decline as temperatures rise.
+The Spring season, despite having the highest individual observation counts, showed a slight negative trend. This may reflect a peak in migration or nesting activity occurring at lower spring temperatures, after which observations decline as temperatures rise.
 
 Winter observations were consistently low, which aligns with the
-species' known migratory behavior—many populations leave colder regions
-during winter months. The weak positive correlation may suggest that in
-relatively milder winters, some individuals remain present or return
-earlier.
+species' known migratory behavior—many populations leave colder regions during winter months. The weak positive correlation may suggest that in relatively milder winters, some individuals remain present or return earlier.
 
-Overall, this analysis underscores how temperature and seasonality can
-influence bird detection and presence. Further investigation into
-habitat variables, precipitation, and food availability could clarify
-the mechanisms behind these seasonal patterns. Understanding these
-relationships is especially important in the context of climate change,
-which may shift seasonal temperature regimes and, in turn, influence
-Bittern migration and habitat use.
+Overall, this analysis underscores how temperature and seasonality can influence bird detection and presence. Further investigation into habitat variables, precipitation, and food availability could clarify the mechanisms behind these seasonal patterns. Understanding these relationships is especially important in the context of climate change, which may shift seasonal temperature regimes and, in turn, influence Bittern migration and habitat use.
 
 #### **References:**
 
