@@ -574,7 +574,7 @@ long_summary <- seasonal_summary %>%
 # Plotting:
 
 ggplot(long_summary, aes(x = season_year, y = value, color = season)) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   facet_wrap(~ variable, scales = "free_y", 
              labeller = as_labeller(c(avg_temp = "Avg Temp (°F)", avg_precp = "Avg Precip (mm)"))) +
   labs(
