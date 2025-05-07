@@ -24,9 +24,9 @@ editor:
 
 ## **Title:**
 
-### **Flight in Flux:** Analyzing American Bittern (Botaurus lentiginosus) Migration Timing and Climate Change
+## **Flight in Flux:** Analyzing American Bittern (Botaurus lentiginosus) Migration Timing and Climate Change
 
-#### **Introduction:** 
+### **Introduction:**
 
 Climate change poses many questions relating to systems across the
 globe, especially ecological and evolutionary systems. One system which
@@ -42,7 +42,7 @@ negatively by a considerable margin with the presence of a changing
 climate altering their regular migratory ranges and patterns (Steen et
 al., 2012).
 
-#### **Abstract:** 
+### **Abstract:**
 
 The American Bittern is a solitary, cryptic species that relies on
 wetlands for breeding and overwintering. Typically, these birds breed in
@@ -66,18 +66,20 @@ understanding how climate variables influence their movements,
 conservationists can prioritize habitat protection, restoration, and
 adaptive management to mitigate potential negative impacts.
 
-**Motivation:** Bird migration range and timing is critical for ensuring
-species survival and ecological balance. However, climate change has
-altered seasonal patterns, potentially disrupting migration timing and
-impacting breeding success, food availability, and overall population
-health. Understanding these shifts can inform conservation strategies
-and mitigate risks to migratory bird species. Additionally, information
+### **Motivation:**
+
+Bird migration range and timing is critical for ensuring species
+survival and ecological balance. However, climate change has altered
+seasonal patterns, potentially disrupting migration timing and impacting
+breeding success, food availability, and overall population health.
+Understanding these shifts can inform conservation strategies and
+mitigate risks to migratory bird species. Additionally, information
 gained from analyzing one species can be used to make inferences about
 the potential shifts in other similar species.
 
-#### **Data**
+### **Data:**
 
-Climate Data Online (NOAA Global Summary of the Month - U.S. Specific)
+#### Climate Data Online (NOAA Global Summary of the Month - U.S. Specific):
 
 With NOAA’s Climate Data Online search, we focused on nine weather
 stations located between Arizona (two weather stations: Phoenix and
@@ -107,7 +109,7 @@ Variables within the Datasets contain:
 -   Format: Character (station info and attribute flags), numeric
     (climate measures), and logical (indicator variables)
 
-American Bittern eBird Data
+#### American Bittern - eBird Data:
 
 This dataset was sourced from eBird and includes observations of
 American Bitterns (Botaurus lentiginosus) reported by citizen
@@ -125,24 +127,7 @@ observations.
 -   Format: Primarily character and logical columns, with a few numeric
     fields (e.g., coordinates, observer count)
 
-Beginning Mumbo Jumbo Libraries:
-
-```{r}
-library(readr)
-library(flextable)
-library(readr)
-library(tidyverse)
-library(tidymodels)
-library(ggplot2)
-library(purrr)
-library(dplyr)
-library(lubridate)
-library(tidyr)
-library(gridExtra)
-
-```
-
-#### **Methods**
+### **Methods**
 
 To examine the effects climate change will have on the migratory timing
 of the American Bittern, we used a monthly summary of climate data from
@@ -150,7 +135,7 @@ nine recorded NOAA weather stations within Arizona, California, Oregon,
 and Washington and observational data of their abundance within those
 states from eBird.
 
-Data Acquiring:
+#### Data Acquiring:
 
 Climate data within nine weather stations stretched between Arizona,
 California, Oregon, and Washington by NOAA Global Monthly Summaries,
@@ -159,7 +144,7 @@ cleaned this data, removing unnecessary attributes for our study,
 converting units to be consistent throughout each dataset, and removing
 unnecessary data from past years to focus on data between 2000-2024.
 
-Data Processing / Seasonal Aggregation:
+#### Data Processing / Seasonal Aggregation:
 
 Each weather station recorded the seasonal averages of temperature and
 precipitation, which were then manipulated into a cleaned version of
@@ -174,7 +159,7 @@ The seasonal component was also applied to the American Bittern
 migration dataframe, which was later converted to a tibble for later
 analysis.
 
-Migratory Timing Analysis of American Bittern:
+#### Migratory Timing Analysis of American Bittern:
 
 Observational data was provided to understand the timing of Bitterns
 within our four selected states, by grouping month and year to
@@ -182,8 +167,7 @@ understand temporal patterns of their appearance based on the seasonal
 presence. Using a time series visualization to detect changes within the
 migratory patterns based on their seasonality between 2000-2024.
 
-Comparing Seasonal Trends of Climate Variability and Bittern
-Observation:
+#### Comparing Seasonal Trends of Climate Variability and Bittern Observation:
 
 To understand the correlation between seasonal changes for all the
 weather stations, we averaged the temperature and precipitation of each
@@ -192,6 +176,22 @@ observation from plot layouts used before, by visually plotting the
 changes in the presence of climate seasonality.
 
 #### Coding Methods:
+
+Beginning Mumbo Jumbo Libraries:
+
+```{r}
+library(readr) 
+library(flextable) 
+library(readr) 
+library(tidyverse) 
+library(tidymodels) 
+library(ggplot2) 
+library(purrr) 
+library(dplyr) 
+library(lubridate) 
+library(tidyr) 
+library(gridExtra) 
+```
 
 1.  Create time period for seasons
 
@@ -349,7 +349,6 @@ avg_prec <- climate_data %>%
 2.  Understanding the changes of average temperature and precipitation
     in a map!
 
-<!-- -->
 
 a.  Temperature Difference between 2000 - 2024 based on seasonality
 
@@ -399,8 +398,16 @@ temp_2000 <- ggplot(avg_temp_2000) +
   coord_fixed(1.3) +
   facet_wrap(~season) +
   labs(title = "Seasonal Average Temperatures (2000)",
-       x = "", y = "") +
+       x = "",
+       y = "",
+       tag = "Figure 1: This is a test note") +
+  coord_cartesian(clip = "off") +
+  theme(plot.title = element_text(hjust = 0.5),
+          plot.margin = margin(t = 10, r = 10, b = 40, l = 10),
+          plot.tag.position = c(0.2, -0.1)
+          ) +
   theme_minimal()
+
 
 # Create the ggplot for 2024
 temp_2024 <- ggplot(avg_temp_2024) +
@@ -592,7 +599,7 @@ combined_data <- left_join(amebit_season, seasonal_summary,
                            by = c("year" = "season_year", "season"))
 
 
-# Visualize climate and bittern data:
+# Visualize temperature and precipitation seasonality and bittern data:
 
 ggplot(combined_data, aes(x = avg_temp, y = total_obs, color = season)) +
   geom_point() +
@@ -600,6 +607,17 @@ ggplot(combined_data, aes(x = avg_temp, y = total_obs, color = season)) +
   labs(
     title = "Relationship Between Seasonal Temperature and Bittern Observations",
     x = "Average Temperature (°F)",
+    y = "Bittern Observations"
+  ) +
+  scale_color_brewer(palette = "Set2") +
+  theme_minimal()
+
+ggplot(combined_data, aes(x = avg_precp, y = total_obs, color = season)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relationship Between Seasonal Precipitation and Bittern Observations",
+    x = "Average Precipitation (100 μm)",
     y = "Bittern Observations"
   ) +
   scale_color_brewer(palette = "Set2") +
