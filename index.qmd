@@ -180,7 +180,7 @@ changes in the presence of climate seasonality.
 
 To evaluate the influence of climate variability on American Bittern observations from 2000 to 2024, we fit a linear mixed effects model using the lmer function from the lme4 package in R. The response variable was the count of observations per year and state. Fixed effects included average temperature (avg_temp) and average precipitation (avg_precp), representing climatic conditions. To account for non-independence among observations across years and states, we included season year and state indicators (AZ, CA, OR, and WA) as random intercepts. This approach allowed us to control for unobserved heterogeneity due to temporal and spatial variation, isolating the effects of climate variables on bird observations. All data and observations were analyzed using RStudio version 2025.05.0 Build 496. 
 
-#### Results:
+### **Results:**
 
 ##### Coding and Figures:
 
@@ -780,7 +780,7 @@ ggplot(combined_data, aes(x = avg_temp, y = observations)) +
 ```
 
 
-```{r fig.cap="Figure 12. Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time.", fig.align='center'}
+```{r fig.cap="Figure 12: Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time.", fig.align='center'}
 ggplot(combined_data, aes(x = factor(season_year), y = observations)) +
   geom_boxplot(fill = "lightblue1") +
   labs(title = "Distribution of Observations by Year",
@@ -790,7 +790,7 @@ ggplot(combined_data, aes(x = factor(season_year), y = observations)) +
   theme(axis.text.x = element_text(angle = 35, hjust = 1))
 ```
 
-```{r fig.cap="Figure 13. Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant.", fig.align='center'}
+```{r fig.cap="Figure 13: Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant.", fig.align='center'}
 
 library(ggeffects)
 
@@ -805,7 +805,7 @@ plot(pred_temp) +
   )
 ```
 
-```{r fig.cap="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.", fig.align='center'}
+```{r fig.cap="Figure 14 & 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.", fig.align='center'}
 library(sjPlot)
 
 # Plot random intercepts for year and state
@@ -813,7 +813,7 @@ plot_model(lmer_mod, type = "re", sort.est = TRUE, title = "Random Effects: Year
 ```
 
 
-#### **Discussion:**
+### **Discussion:**
 
 These results suggest that seasonal temperature plays a variable role in Bittern observations, likely reflecting differences in migratory behavior, breeding activity, and habitat use throughout the year.
 
@@ -826,7 +826,7 @@ species' known migratory behavior—many populations leave colder regions during
 
 Overall, this analysis underscores how temperature and seasonality can influence bird detection and presence. Further investigation into habitat variables, precipitation, and food availability could clarify the mechanisms behind these seasonal patterns. Understanding these relationships is especially important in the context of climate change, which may shift seasonal temperature regimes and, in turn, influence Bittern migration and habitat use.
 
-#### **References:**
+### **References:**
 
 Status and trends of wetlands in the conterminous United States 2004 to
 2009. US Department of the Interior, US Fish and Wildlife Service,

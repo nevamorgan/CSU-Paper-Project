@@ -3143,6 +3143,9 @@ font-family: inherit;
   <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation"><strong>Motivation:</strong></a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><strong>Data:</strong></a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><strong>Methods</strong></a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><strong>Results:</strong></a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><strong>Discussion:</strong></a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><strong>References:</strong></a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="miaindex.embed-preview.html"><i class="bi bi-journal-code"></i>**Title:**</a></li><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li></ul></div></nav>
@@ -3217,8 +3220,9 @@ font-family: inherit;
 <p>To understand the correlation between seasonal changes for all the weather stations, we averaged the temperature and precipitation of each month per year. We then evaluated the long-term changes in bittern observation from plot layouts used before, by visually plotting the changes in the presence of climate seasonality.</p>
 <p>To evaluate the influence of climate variability on American Bittern observations from 2000 to 2024, we fit a linear mixed effects model using the lmer function from the lme4 package in R. The response variable was the count of observations per year and state. Fixed effects included average temperature (avg_temp) and average precipitation (avg_precp), representing climatic conditions. To account for non-independence among observations across years and states, we included season year and state indicators (AZ, CA, OR, and WA) as random intercepts. This approach allowed us to control for unobserved heterogeneity due to temporal and spatial variation, isolating the effects of climate variables on bird observations. All data and observations were analyzed using RStudio version 2025.05.0 Build 496.</p>
 </section>
-<section id="results" class="level4">
-<h4 class="anchored" data-anchor-id="results">Results:</h4>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results"><strong>Results:</strong></h3>
 <section id="coding-and-figures" class="level5">
 <h5 class="anchored" data-anchor-id="coding-and-figures">Coding and Figures:</h5>
 <ol type="1">
@@ -3469,10 +3473,10 @@ avg_precp -0.462  0.635</code></pre>
 <figure class="figure">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="index_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure 12. Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time."><img role="img" aria-label="Figure 12. Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time." src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 12. Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time."></a></p>
+<p><a href="index_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure 12: Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time."><img role="img" aria-label="Figure 12: Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time." src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 12: Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time."></a></p>
 </figure>
 </div>
-<figcaption>Figure 12. Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time.</figcaption>
+<figcaption>Figure 12: Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time.</figcaption>
 </figure>
 </div>
 </div>
@@ -3483,10 +3487,10 @@ avg_precp -0.462  0.635</code></pre>
 <figure class="figure">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="index_files/figure-html/unnamed-chunk-22-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure 13. Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant."><img role="img" aria-label="Figure 13. Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant." src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 13. Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant."></a></p>
+<p><a href="index_files/figure-html/unnamed-chunk-22-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure 13: Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant."><img role="img" aria-label="Figure 13: Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant." src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 13: Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant."></a></p>
 </figure>
 </div>
-<figcaption>Figure 13. Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant.</figcaption>
+<figcaption>Figure 13: Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant.</figcaption>
 </figure>
 </div>
 </div>
@@ -3500,10 +3504,10 @@ avg_precp -0.462  0.635</code></pre>
 <figure class="figure">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="index_files/figure-html/unnamed-chunk-23-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."><img role="img" aria-label="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean." src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."></a></p>
+<p><a href="index_files/figure-html/unnamed-chunk-23-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."><img role="img" aria-label="Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean." src="index_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."></a></p>
 </figure>
 </div>
-<figcaption>Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.</figcaption>
+<figcaption>Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.</figcaption>
 </figure>
 </div>
 </div>
@@ -3516,30 +3520,29 @@ avg_precp -0.462  0.635</code></pre>
 <figure class="figure">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="index_files/figure-html/unnamed-chunk-23-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."><img role="img" aria-label="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean." src="index_files/figure-html/unnamed-chunk-23-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."></a></p>
+<p><a href="index_files/figure-html/unnamed-chunk-23-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."><img role="img" aria-label="Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean." src="index_files/figure-html/unnamed-chunk-23-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672" alt="Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean."></a></p>
 </figure>
 </div>
-<figcaption>Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.</figcaption>
+<figcaption>Figure 14 &amp; 15: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="discussion" class="level4">
-<h4 class="anchored" data-anchor-id="discussion"><strong>Discussion:</strong></h4>
+<section id="discussion" class="level3">
+<h3 class="anchored" data-anchor-id="discussion"><strong>Discussion:</strong></h3>
 <p>These results suggest that seasonal temperature plays a variable role in Bittern observations, likely reflecting differences in migratory behavior, breeding activity, and habitat use throughout the year.</p>
 <p>The strong positive trend in Summer may indicate that Bitterns are more active or easier to observe during warmer months, potentially due to breeding activity or greater availability of wetland habitats. Similarly, the positive trend in Fall could reflect pre-migration behavior or favorable foraging conditions as temperatures cool.</p>
 <p>The Spring season, despite having the highest individual observation counts, showed a slight negative trend. This may reflect a peak in migration or nesting activity occurring at lower spring temperatures, after which observations decline as temperatures rise.</p>
 <p>Winter observations were consistently low, which aligns with the species’ known migratory behavior—many populations leave colder regions during winter months. The weak positive correlation may suggest that in relatively milder winters, some individuals remain present or return earlier.</p>
 <p>Overall, this analysis underscores how temperature and seasonality can influence bird detection and presence. Further investigation into habitat variables, precipitation, and food availability could clarify the mechanisms behind these seasonal patterns. Understanding these relationships is especially important in the context of climate change, which may shift seasonal temperature regimes and, in turn, influence Bittern migration and habitat use.</p>
 </section>
-<section id="references" class="level4">
-<h4 class="anchored" data-anchor-id="references"><strong>References:</strong></h4>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references"><strong>References:</strong></h3>
 <p>Status and trends of wetlands in the conterminous United States 2004 to 2009. US Department of the Interior, US Fish and Wildlife Service, Fisheries and Habitat Conservation.</p>
 <p>eBird. (2025). eBird: An online database of bird distribution and abundance [web application]. eBird, Cornell Lab of Ornithology, Ithaca, New York. Available: http://www.ebird.org. (Accessed: April 16, 2025).</p>
 <p>La Sorte, F. A., &amp; Thompson III, F. R. (2007). Poleward shifts in winter ranges of North American birds. Ecology, 88(7), 1803-1812.</p>
-</section>
 </section>
 </section>
 
