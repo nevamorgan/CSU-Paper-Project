@@ -168,7 +168,7 @@ Observational data was provided to understand the timing of Bitterns
 within our four selected states, by grouping month and year to
 understand temporal patterns of their appearance based on the seasonal
 presence. Using a time series visualization to detect changes within the
-migratory patterns based on their seasonality between 2000-2024.
+migratory patterns based on their seasonality between 2000 and 2024.
 
 #### Comparing Seasonal Trends of Climate Variability and Bittern Observation:
 
@@ -176,15 +176,17 @@ To understand the correlation between seasonal changes for all the
 weather stations, we averaged the temperature and precipitation of each
 month per year. We then evaluated the long-term changes in bittern
 observation from plot layouts used before, by visually plotting the
-changes in the presence of climate seasonality.
+changes in the presence of climate seasonality. 
+
+To evaluate the influence of climate variability on American Bittern observations from 2000 to 2024, we fit a linear mixed effects model using the lmer function from the lme4 package in R. The response variable was the count of observations per year and state. Fixed effects included average temperature (avg_temp) and average precipitation (avg_precp), representing climatic conditions. To account for non-independence among observations across years and states, we included season year and state indicators (AZ, CA, OR, and WA) as random intercepts. This approach allowed us to control for unobserved heterogeneity due to temporal and spatial variation, isolating the effects of climate variables on bird observations. All data and observations were analyzed using RStudio version 2025.05.0 Build 496. 
 
 #### Results:
 
 ##### Coding and Figures:
-Beginning Mumbo Jumbo Libraries:
 
 ```{r}
-library(readr) 
+# Beginning Mumbo Jumbo Libraries:
+
 library(flextable) 
 library(readr) 
 library(tidyverse) 
@@ -194,7 +196,8 @@ library(purrr)
 library(dplyr) 
 library(lubridate) 
 library(tidyr) 
-library(gridExtra) 
+library(gridExtra)
+library(stringr)
 ```
 
 1.  Create time period for seasons
@@ -299,7 +302,7 @@ climate_data <- bind_rows(cleaned_list)
 
 ```
 
-a.  BUILDING SEASONS!:
+a.  Building Seasons:
 
 ```{r}
 
@@ -351,7 +354,7 @@ avg_prec <- climate_data %>%
 ```
 
 2.  Understanding the changes of average temperature and precipitation
-    in a map!
+    in a U.S. map!
 
 
 a.  Temperature Difference between 2000 - 2024 based on seasonality
@@ -414,6 +417,8 @@ temp_2000 <- ggplot(avg_temp_2000) +
        y = "")+
   theme_minimal()
 ```
+
+
 
 ```{r fig.cap="Average seasonal temperatures (°F) at nine selected weather stations across Arizona, California, Oregon, and Washington. Recorded from January 1st, 2024 to December 31st, 2024. Faceted by season.", fig.align='center'}
 # Create the ggplot for 2024
@@ -513,8 +518,6 @@ grid.arrange(prec_2000, prec_2024, ncol = 2)
 ```
 
 
-
-
 3.  Bird migration pattern time!
 
 Based on eBird data, we are focusing in the Western Pacific region of
@@ -534,40 +537,65 @@ View(amebit_data)
 amebit_monthly <- amebit_data %>%
   mutate(ob_date = mdy(`OBSERVATION DATE`),
          year = year(ob_date),
-         month = month(ob_date, label = TRUE)) %>%
-  group_by(year, month) %>%
+         month = month(ob_date, label = TRUE),
+         state_abb = state.abb[match(STATE, state.name)]
+  ) %>%
+  group_by(year, month, state_abb) %>%
   summarize(observations = n(), .groups = "drop") %>%
   filter(year >= 2000, year <= 2024)
 
 ```
 
 
-```{r fig.cap="Figure 5: Observation trends of American Bitterns measured monthly from 2000 to 2024 within the four selected states: Arizona, California, Oregon, and Washington. Measured by eBird data analysts.", fig.align='center'}
+```{r fig.cap="Figure 5: Distribution of American Bittern eBird observations within Arizona, California, Oregon, and Washington. Recorded over 2000-2024.", fig.align='center'}
+
+ggplot(amebit_monthly, aes(x = state_abb, y = observations, fill = state_abb)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Distribution of eBird Bittern Observations by State from 2000 - 2024",
+       x = "State",
+       y = "Observation Count") +
+  theme_minimal()
+```
+
+
+```{r fig.cap="Figure 6: Observation trends of American Bitterns measured monthly from 2000 to 2024 within the four selected states: Arizona, California, Oregon, and Washington. Measured by eBird data analysts.", fig.align='center'}
 # Visualize time:
 
-ggplot(amebit_monthly, aes(x = month, y = observations, group = year, color = as.factor(year))) +
+
+amebit_monthly %>%
+  filter(state_abb %in% c("CA", "AZ", "WA", "OR")) %>%
+  ggplot(aes(x = month, y = observations, group = year, color = as.factor(year))) +
   geom_line(alpha = 0.5) +
+  facet_wrap(~ state_abb, ncol = 2) +  # 2 columns, adjust as needed
   labs(
-    title = "Seasonal Observation Trends of American Bittern 2000 - 2024",
+    title = "Seasonal Observation Trends of American Bittern (2000–2024)",
     x = "Month",
     y = "Number of Observations",
     color = "Year"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(face = "bold")
+  )
+
 
 ```
 
 
 4.  Looking at seasonal changes over time
 
-```{r fig.cap="Figure 6: Seasonal trends of average temperature ((°F)) and precipitation (mm) as recorded by the nine weather stations in Arizona, California, Oregon, and Washington. Recorded between 2000 and 2024.", fig.align='center'}
+```{r fig.cap="Figure 7: Seasonal trends of average temperature ((°F)) and precipitation (mm) as recorded by the nine weather stations in Arizona, California, Oregon, and Washington. Recorded between 2000 and 2024.", fig.align='center'}
 
-seasonal_summary <- climate_data %>%
+annual_summary <- climate_data %>%
   mutate(
-    TAVG_F = (TAVG * 9/5) + 32,       # Convert temp to Fahrenheit
-    PRCP_mm = PRCP / 10               # Convert tenths of mm to mm
+    TAVG_F = (TAVG * 9/5) + 32,
+    PRCP_mm = PRCP / 10,
+    state_abb = str_extract(NAME, "[A-Z]{2}(?=\\sUS)")
   ) %>%
-  group_by(season_year, season) %>%
+  filter(state_abb %in% c("AZ", "OR", "WA", "CA")) %>%
+  group_by(season_year, season, state_abb) %>%
   summarize(
     avg_temp = mean(TAVG_F, na.rm = TRUE),
     avg_precp = mean(PRCP_mm, na.rm = TRUE),
@@ -575,118 +603,214 @@ seasonal_summary <- climate_data %>%
   ) %>%
   filter(season_year >= 2000, season_year <= 2024)
 
-
 # Reshaping to make plotting easier to understand shifts in Temp and Precip!
 
-long_summary <- seasonal_summary %>%
+long_annual <- annual_summary %>%
   pivot_longer(cols = c(avg_temp, avg_precp),
                names_to = "variable", values_to = "value")
 
 
 # Plotting:
 
-ggplot(long_summary, aes(x = season_year, y = value, color = season)) +
+ggplot(long_annual, aes(x = season_year, y = value, color = season)) +
   geom_line(linewidth = 1) +
-  facet_wrap(~ variable, scales = "free_y", 
-             labeller = as_labeller(c(avg_temp = "Avg Temp (°F)", avg_precp = "Avg Precip (mm)"))) +
-  labs(
-    title = "Seasonal Trends in Temperature and Precipitation (2000–2024)",
-    x = "Year", y = NULL
+  facet_grid(variable ~ state_abb, scales = "free_y",
+             labeller = labeller(variable = c(
+               avg_temp = "Avg Temp (°F)",
+               avg_precp = "Avg Precip (mm)"
+             ))) +
+  theme(panel.spacing = unit(1.2, "lines")) +
+  scale_x_continuous(breaks = seq(2000, 2024, by = 4)) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
   ) +
-  scale_color_brewer(palette = "Set2", name = "Season") +
-  theme_minimal()
+  labs(
+    title = "Seasonal Climate Variation by State (2000–2024)",
+    x = "Year", y = NULL, color = "Season"
+  ) +
+  scale_color_brewer(palette = "Set2")
 
 ```
 
+Seasonal shifts in average temperature, precipitation, and number of American Bittern has all increased from 2000 to 2024 (Fig. 9). 
+
+```{r fig.cap="Figure 8: Seasonality shifts of average temperature, precipitation, and number of American Bittern observations recorded yearly from 2000-2024. Data was recorded within nine weather stations across Arizona, California, Oregon, and Washington, including eBird observation count recorded between 2000 and 2024 for the respective states.", fig.align='center'}
+# Relationship between climate and bittern evolving together!
+amebit_seasonal <- amebit_data %>%
+  mutate(
+    ob_date = mdy(`OBSERVATION DATE`),
+    year = year(ob_date),
+    month = month(ob_date),
+    season = case_when(
+      month %in% c(12, 1, 2) ~ "Winter",
+      month %in% c(3, 4, 5) ~ "Spring",
+      month %in% c(6, 7, 8) ~ "Summer",
+      month %in% c(9, 10, 11) ~ "Fall"
+    ),
+    season_year = if_else(month == 12, year + 1, year),
+    state_abb = state.abb[match(STATE, state.name)]
+  ) %>%
+  filter(state_abb %in% c("CA", "AZ", "WA", "OR")) %>%
+  group_by(season_year, season, state_abb) %>%
+  summarize(observations = n(), .groups = "drop") %>%
+  filter(season_year >= 2000, season_year <= 2024)
+
+# Combining all data sets made so far:
+combined_data <- left_join(amebit_seasonal, annual_summary,
+                           by = c("season_year", "season", "state_abb"))
+
+combined_long <- combined_data %>%
+  pivot_longer(cols = c(avg_temp, avg_precp),
+               names_to = "variable", values_to = "value")
+
+ggplot(combined_long, aes(x = value, y = observations, color = season)) +
+  geom_point(alpha = 0.7) +
+  facet_wrap(state_abb ~ variable, scales = "free_x", 
+             labeller = labeller(variable = c(
+               avg_temp = "Average Temperature (°F)",
+               avg_precp = "Average Precipitation (mm)"
+             ))) +
+  labs(
+    title = "Seasonal Temperature, Precipitation, and American Bittern Observations",
+    x = NULL,
+    y = "Number of Observations",
+    color = "Season"
+  ) +
+  theme_minimal() +
+  scale_x_continuous(name = NULL) +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    strip.text = element_text(size = 12)
+  )
+
+```
 
 
 5.  Let's combine them to see if there is a difference!
 
 The correlation graph displays the relationship between average seasonal temperature (°F) and the number of Bittern observations, with separate linear trends plotted for each season. The visualized data reveals distinct seasonal patterns in both temperature and observation count (Fig. 7). Each point representing the yearly average temperature and respective count of American Bitterns.
 
-```{r fig.cap="Figure 7: Average temperature of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average temperature measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
-# Adding seasonality to American Bittern data:
-
-amebit_season <- amebit_monthly %>%
-  mutate(season = case_when(
-    month %in% c("Dec", "Jan", "Feb") ~ "Winter",
-    month %in% c("Mar", "Apr", "May") ~ "Spring",
-    month %in% c("Jun", "Jul", "Aug") ~ "Summer",
-    month %in% c("Sep", "Oct", "Nov") ~ "Fall"
-  )) %>%
-  group_by(year, season) %>%
-  summarize(total_obs = sum(observations), .groups = "drop")
+```{r fig.cap="Figure 9: Average temperature of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average temperature measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
 
 
-# Merging the climate data and bittern data
-
-combined_data <- left_join(amebit_season, seasonal_summary, 
-                           by = c("year" = "season_year", "season"))
-
-
-# Visualize temperature seasonality and bittern data:
-
-ggplot(combined_data, aes(x = avg_temp, y = total_obs, color = season)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
+ggplot(combined_long %>% filter(variable == "avg_temp"), 
+       aes(x = value, y = observations, color = season)) +
+  geom_point(alpha = 0.7) +
+  geom_text(data = combined_long %>%
+              filter(variable == "avg_temp", season_year %in% c(2000, 2024)),
+            aes(label = season_year),
+            vjust = -0.5, size = 3, show.legend = FALSE) +
+  facet_wrap(~ state_abb, scales = "free_x") +
   labs(
-    title = "Relationship Between Seasonal Temperature and Bittern Observations",
+    title = "Seasonal Average Temperature and American Bittern Observations",
     x = "Average Temperature (°F)",
-    y = "Bittern Observations"
+    y = "Number of Observations",
+    color = "Season"
   ) +
-  scale_color_brewer(palette = "Set2") +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    strip.text = element_text(size = 12),
+    legend.position = "bottom"
+  )
 
 ```
 
 The correlation graph displays the relationship between average seasonal precipitation (mm) and the number of Bittern observations, with separate linear trends plotted for each season. The visualized data reveals distinct seasonal patterns in both precipitation and observation count (Fig. 8). Each point representing the yearly average precipitation and respective count of American Bitterns.
 
-```{r fig.cap="Figure 8: Average precipitation (mm) of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average precipitation measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
+```{r fig.cap="Figure 10: Average precipitation (mm) of year (2000-2024) in relation towards American Bittern observation count faceted by seasonality. Each point represents a year ranging from 2000-2024, with it's average precipitation measured, by season, and number of recorded American Bittern observations. Recorded within Arizona, California, Oregon, and Washington.", fig.align='center'}
 
 # Visualize precipitation seasonality and bittern data:
 
-ggplot(combined_data, aes(x = avg_precp, y = total_obs, color = season)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
+ggplot(combined_long %>% filter(variable == "avg_precp"), 
+       aes(x = value, y = observations, color = season)) +
+  geom_point(alpha = 0.7) +
+  geom_text(data = combined_long %>%
+              filter(variable == "avg_precp", season_year %in% c(2000, 2024)),
+            aes(label = season_year),
+            vjust = -0.5, size = 3, show.legend = FALSE) +
+  facet_wrap(~ state_abb, scales = "free_x") +
   labs(
-    title = "Relationship Between Seasonal Precipitation and Bittern Observations",
-    x = "Average Precipitation (100 μm)",
-    y = "Bittern Observations"
+    title = "Seasonal Average Precipitation and American Bittern Observations",
+    x = "Average Precipitation (mm)",
+    y = "Number of Observations",
+    color = "Season"
   ) +
-  scale_color_brewer(palette = "Set2") +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    strip.text = element_text(size = 12),
+    legend.position = "bottom"
+  )
 ```
-
-Seasonal shifts in average temperature, precipitation, and number of American Bittern has all increased from 2000 to 2024 (Fig. 9). 
-
-```{r fig.cap="Figure 9: Seasonality shifts of average temperature, precipitation, and number of American Bittern observations recorded yearly from 2000-2024. Data was recorded within nine weather stations across Arizona, California, Oregon, and Washington, including eBird observation count recorded between 2000 and 2024 for the respective states.", fig.align='center'}
-# Relationship between climate and bittern evolving together!
-
-combined_long <- combined_data %>%
-  pivot_longer(cols = c(avg_temp, avg_precp, total_obs),
-               names_to = "variable", values_to = "value")
-
-ggplot(combined_long, aes(x = year, y = value, color = season)) +
-  geom_line() +
-  facet_wrap(~ variable, scales = "free_y",
-             labeller = as_labeller(c(
-               avg_temp = "Avg Temp (°F)",
-               avg_precp = "Avg Precip (mm)",
-               total_obs = "Bittern Observations"
-             ))) +
-  labs(
-    title = "Bittern Observations and Climate Trends by Season (2000–2024)",
-    x = "Year", y = NULL
-  ) +
-  scale_color_brewer(palette = "Set2") +
-  theme_minimal()
-
-
-
-```
-
 
 During Winter, average temperatures ranged from approximately 37°F to 47°F, with Bittern observations generally below 1,000 (Fig. 7). A slight positive trend was noted, suggesting a weak relationship between increasing temperature and higher observations (Fig. 9). In Spring, temperatures were around 50°F to 58°F (Fig. 7). Although this season had the highest overall number of Bittern observations—with some counts exceeding 2,000—there was a slight negative trend in the linear fit, indicating that the number of Bittern observations tended to decrease slightly with increasing temperature (Fig. 9). Fall showed a moderate positive trend, with observations increasing alongside temperatures ranging from 52°F to 59°F (Fig. 7). However, overall observations remained lower compared to Spring and Summer (Fig. 7). Summer displayed the strongest positive trend. As temperatures increased from 67°F to 74°F, Bittern observations increased significantly (Fig. 9). This season also showed more consistent and clustered high observations, suggesting a stronger relationship between higher temperatures and increased presence of Bitterns (Fig. 9).
+
+##### **ANOVA Tests:**
+
+```{r}
+# 1. creating a linear model test
+combined_data$season_year <- as.factor(combined_data$season_year)
+combined_data$state_abb <- as.factor(combined_data$state_abb)
+
+
+lm_mod <- lm(observations ~ avg_temp * season_year + avg_precp * season_year + state_abb, data = combined_data)
+
+library(car)
+print(Anova(lm_mod, type = 2))
+
+library(lme4)
+lmer_mod <- lmer(observations ~ avg_temp + avg_precp + (1 | season_year) + (1 | state_abb), data = combined_data)
+
+print(summary(lmer_mod))
+
+```
+
+```{r fig.cap="Figure 11: Average temperature (mm) of year (2000-2024) effect on American Bittern observation count taken during that time period, within Arizona, California, Oregon, and Washington. Points represent individual observations, and the blue line shows a linear trend with 95% confidence interval.", fig.align='center'}
+ggplot(combined_data, aes(x = avg_temp, y = observations)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", se = TRUE, color = "steelblue") +
+  labs(
+    title = "Effect of Average Temperature on Bittern Observations",
+    x = "Average Temperature (°F)",
+    y = "American Bittern Observations"
+  ) +
+  theme_minimal()
+```
+
+
+```{r fig.cap="Figure 12. Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time.", fig.align='center'}
+ggplot(combined_data, aes(x = factor(season_year), y = observations)) +
+  geom_boxplot(fill = "lightblue1") +
+  labs(title = "Distribution of Observations by Year",
+       x = "Year",
+       y = "Observations") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 35, hjust = 1))
+```
+
+```{r fig.cap="Figure 13. Predicted effect of average temperature on American Bittern observations from the mixed effects model. Marginal predictions are based on fixed effects, holding precipitation, year, and state constant.", fig.align='center'}
+
+library(ggeffects)
+
+# Predict marginal effects of temperature
+pred_temp <- ggpredict(lmer_mod, terms = "avg_temp")
+
+plot(pred_temp) +
+  labs(
+    title = "Predicted Observations vs. Avg Temp (Mixed Model)",
+    x = "Average Temperature (°F)",
+    y = "Predicted Observations"
+  )
+```
+
+```{r fig.cap="Figure 14. Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.", fig.align='center'}
+library(sjPlot)
+
+# Plot random intercepts for year and state
+plot_model(lmer_mod, type = "re", sort.est = TRUE, title = "Random Effects: Year and State on Bittern Observations")
+```
 
 
 #### **Discussion:**
