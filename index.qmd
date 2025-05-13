@@ -1,12 +1,6 @@
 ---
 project:
   title: "ESS 330 Paper Proposals"
-  output-dir: docs
-  type: website
-
-format:
-  html:
-    self-contained: true
 
 authors:
   - name: Mia Colangelo
@@ -546,7 +540,7 @@ amebit_monthly <- amebit_data %>%
 
 ggplot(amebit_monthly, aes(x = state_abb, y = observations, fill = state_abb)) +
   geom_boxplot() +
-  scale_fill_brewer(palette = "Set1",
+  scale_fill_brewer(palette = "Set3",
                     name = "State Name",
                     labels = c("AZ" = "Arizona",
                                "CA" = "California",
@@ -785,7 +779,7 @@ plot(pred_temp) +
   )
 ```
 
-```{r fig.cap="Figure 13 & 14: Random intercept effects of season_year and state on American Bittern observations from the mixed model. Positive values indicate above-average observation rates relative to the grand mean.", fig.align='center'}
+```{r fig.cap="Figure 13: Random intercept effects of the year [[1]] and state [[2]] on American Bittern observations from the mixed model. Positive values (blue) indicate above-average observation rates relative to the grand mean. Negative values (red) indicative a below-average observation rates relative to the grand mean.", fig.align='center'}
 library(sjPlot)
 
 # Plot random intercepts for year and state
