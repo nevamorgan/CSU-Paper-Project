@@ -25,9 +25,8 @@ editor:
     wrap: 72
 ---
 
-## **Title:**
 
-## **Flight in Flux:** Analyzing American Bittern (Botaurus lentiginosus) Migration Timing and Climate Change
+# **Flight in Flux:** Analyzing American Bittern (Botaurus lentiginosus) Migration Timing and Climate Change
 
 ### **Introduction:**
 
@@ -198,6 +197,8 @@ library(lubridate)
 library(tidyr) 
 library(gridExtra)
 library(stringr)
+library(cowplot)
+library(gridExtra)
 ```
 
 1.  Create time period for seasons
@@ -307,9 +308,6 @@ a.  Building Seasons:
 ```{r}
 
 # Changing into month and year
-
-head(climate_data$DATE)
-
 climate_data <- climate_data %>%
   mutate(
     DATE = paste0(DATE, "-01"), # Adding a day component since it was missing!
@@ -318,8 +316,8 @@ climate_data <- climate_data %>%
     month = month(DATE)
   )
 
-# Creating a season:
 
+# Creating seasons:
 climate_data <- climate_data %>%
   mutate(
     season = case_when(
@@ -330,8 +328,7 @@ climate_data <- climate_data %>%
     ))
 
 
-
-# Creating a season with the year to compare for climate
+# Creating seasons with the year to compare for climate
 climate_data <- climate_data %>%
   mutate(
     season_year = if_else(month == 12, year + 1, year)
@@ -339,7 +336,6 @@ climate_data <- climate_data %>%
 
 
 #Separating temp and precp to clean further!
-
 avg_temp <- climate_data %>%
   mutate(TAVG_F = (TAVG * 9/5) + 32) %>%
   group_by(STATION, NAME, month, season, season_year) %>%
@@ -363,7 +359,6 @@ The seasonal average temperature varies respectively within each recorded season
 
 ```{r fig.cap="Figure 1: Average seasonal temperatures (°F) at nine selected climate stations across Arizona, California, Oregon, and Washington from 2000–2024, faceted by season.", fig.align='center'}
 #TEMPERATURE!!!
-
 
 #creating a separte coordination dataframe
 station_coords <- climate_data %>%
@@ -438,7 +433,7 @@ temp_2024 <- ggplot(avg_temp_2024) +
 ```{r fig.cap="Figure 2: Average seasonal temperatures (°F) at nine selected weather stations across Arizona, California, Oregon, and Washington combined to show difference side by side. Faceted by season, featuring 2000 and 2024 temperature data.", fig.align='center'}
 # Arrange them to be side by side!
 
-grid.arrange(temp_2000, temp_2024, ncol = 2)
+plot_grid(temp_2000, temp_2024, labels=c("", ""), ncol = 1, nrow = 2, widths = c(1), align = "v")
 
 ```
 
@@ -514,7 +509,7 @@ prec_2024 <- ggplot(avg_prec_2024) +
 
 # Arrange them to be side by side!
 
-grid.arrange(prec_2000, prec_2024, ncol = 2)
+plot_grid(prec_2000, prec_2024, labels=c("", ""), ncol = 1, nrow = 2, widths = c(1), align = "v")
 ```
 
 
@@ -551,7 +546,12 @@ amebit_monthly <- amebit_data %>%
 
 ggplot(amebit_monthly, aes(x = state_abb, y = observations, fill = state_abb)) +
   geom_boxplot() +
-  scale_fill_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1",
+                    name = "State Name",
+                    labels = c("AZ" = "Arizona",
+                               "CA" = "California",
+                               "OR" = "Oregon",
+                               "WA" = "Washington")) +
   labs(title = "Distribution of eBird Bittern Observations by State from 2000 - 2024",
        x = "State",
        y = "Observation Count") +
@@ -567,7 +567,7 @@ amebit_monthly %>%
   filter(state_abb %in% c("CA", "AZ", "WA", "OR")) %>%
   ggplot(aes(x = month, y = observations, group = year, color = as.factor(year))) +
   geom_line(alpha = 0.5) +
-  facet_wrap(~ state_abb, ncol = 2) +  # 2 columns, adjust as needed
+  facet_wrap(~ state_abb, ncol = 2) +
   labs(
     title = "Seasonal Observation Trends of American Bittern (2000–2024)",
     x = "Month",
@@ -629,7 +629,7 @@ ggplot(long_annual, aes(x = season_year, y = value, color = season)) +
     title = "Seasonal Climate Variation by State (2000–2024)",
     x = "Year", y = NULL, color = "Season"
   ) +
-  scale_color_brewer(palette = "Set2")
+  scale_color_brewer(palette = "Set1")
 
 ```
 
@@ -691,7 +691,8 @@ ggplot(combined_long %>% filter(variable == "avg_temp"),
     axis.text.x = element_text(angle = 0, hjust = 1),
     strip.text = element_text(size = 12),
     legend.position = "bottom"
-  )
+  ) +
+  scale_color_brewer(palette = "Set1")
 
 ```
 
@@ -720,7 +721,8 @@ ggplot(combined_long %>% filter(variable == "avg_precp"),
     axis.text.x = element_text(angle = 0, hjust = 1),
     strip.text = element_text(size = 12),
     legend.position = "bottom"
-  )
+  ) +
+  scale_color_brewer(palette = "Set1")
 ```
 
 During Winter, average temperatures ranged from approximately 37°F to 47°F, with Bittern observations generally below 1,000 (Fig. 7). A slight positive trend was noted, suggesting a weak relationship between increasing temperature and higher observations (Fig. 9). In Spring, temperatures were around 50°F to 58°F (Fig. 7). Although this season had the highest overall number of Bittern observations—with some counts exceeding 2,000—there was a slight negative trend in the linear fit, indicating that the number of Bittern observations tended to decrease slightly with increasing temperature (Fig. 9). Fall showed a moderate positive trend, with observations increasing alongside temperatures ranging from 52°F to 59°F (Fig. 7). However, overall observations remained lower compared to Spring and Summer (Fig. 7). Summer displayed the strongest positive trend. As temperatures increased from 67°F to 74°F, Bittern observations increased significantly (Fig. 9). This season also showed more consistent and clustered high observations, suggesting a stronger relationship between higher temperatures and increased presence of Bitterns (Fig. 9).
@@ -748,7 +750,7 @@ print(summary(lmer_mod))
 ```{r fig.cap="Figure 10: Average temperature (mm) of year (2000-2024) effect on American Bittern observation count taken during that time period, within Arizona, California, Oregon, and Washington. Points represent individual observations, and the blue line shows a linear trend with 95% confidence interval.", fig.align='center'}
 ggplot(combined_data, aes(x = avg_temp, y = observations)) +
   geom_point(alpha = 0.4) +
-  geom_smooth(method = "lm", se = TRUE, color = "steelblue") +
+  geom_smooth(method = "lm", se = TRUE, color = "steelblue1") +
   labs(
     title = "Effect of Average Temperature on Bittern Observations",
     x = "Average Temperature (°F)",
@@ -760,7 +762,7 @@ ggplot(combined_data, aes(x = avg_temp, y = observations)) +
 
 ```{r fig.cap="Figure 11: Interannual variation in American Bittern observations from 2000 to 2024. Spread of observations across years, highlighting changes over time.", fig.align='center'}
 ggplot(combined_data, aes(x = factor(season_year), y = observations)) +
-  geom_boxplot(fill = "lightblue1") +
+  geom_boxplot(fill = "dodgerblue") +
   labs(title = "Distribution of Observations by Year",
        x = "Year",
        y = "Observations") +
