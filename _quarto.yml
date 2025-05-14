@@ -1,9 +1,12 @@
 project:
-  type: website
+  type: manuscript
   output-dir: docs
 
 manuscript:
   article: index.qmd
+  notebooks:
+    - notebook: docs/index-preview.html
+      title: Flight in Flux
 
 format:
   html:

@@ -1,6 +1,7 @@
 ---
 project:
   title: "ESS 330 Paper Project"
+  type: manuscript
 
 authors:
   - name: Mia Colangelo
