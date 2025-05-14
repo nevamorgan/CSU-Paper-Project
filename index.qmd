@@ -1,6 +1,6 @@
 ---
 project:
-  title: "ESS 330 Paper Proposals"
+  title: "ESS 330 Paper Project"
 
 authors:
   - name: Mia Colangelo

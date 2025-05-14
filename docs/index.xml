@@ -265,16 +265,287 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
     <title><bold>Results:</bold></title>
     <sec id="coding-and-figures">
       <title>Coding and Figures:</title>
+      <code language="r script"># Beginning Mumbo Jumbo Libraries:
+
+library(flextable) </code>
+      <preformat>Warning: package 'flextable' was built under R version 4.4.3</preformat>
+      <code language="r script">library(readr) </code>
+      <preformat>Warning: package 'readr' was built under R version 4.4.3</preformat>
+      <code language="r script">library(tidyverse) </code>
+      <preformat>Warning: package 'tidyverse' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'ggplot2' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'tidyr' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'purrr' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'dplyr' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'stringr' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'lubridate' was built under R version 4.4.3</preformat>
+      <preformat>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ purrr     1.0.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ purrr::compose() masks flextable::compose()
+✖ dplyr::filter()  masks stats::filter()
+✖ dplyr::lag()     masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</preformat>
+      <code language="r script">library(tidymodels) </code>
+      <preformat>Warning: package 'tidymodels' was built under R version 4.4.3</preformat>
+      <preformat>── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──
+✔ broom        1.0.8     ✔ rsample      1.3.0
+✔ dials        1.4.0     ✔ tune         1.3.0
+✔ infer        1.0.8     ✔ workflows    1.2.0
+✔ modeldata    1.4.0     ✔ workflowsets 1.1.0
+✔ parsnip      1.3.1     ✔ yardstick    1.3.2
+✔ recipes      1.3.0     </preformat>
+      <preformat>Warning: package 'broom' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'dials' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'infer' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'parsnip' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'recipes' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'rsample' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'tune' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'workflows' was built under R version 4.4.3</preformat>
+      <preformat>Warning: package 'yardstick' was built under R version 4.4.3</preformat>
+      <preformat>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ purrr::compose()  masks flextable::compose()
+✖ scales::discard() masks purrr::discard()
+✖ dplyr::filter()   masks stats::filter()
+✖ recipes::fixed()  masks stringr::fixed()
+✖ dplyr::lag()      masks stats::lag()
+✖ yardstick::spec() masks readr::spec()
+✖ recipes::step()   masks stats::step()</preformat>
+      <code language="r script">library(ggplot2) 
+library(purrr) 
+library(dplyr) 
+library(lubridate) 
+library(tidyr) 
+library(gridExtra)</code>
+      <preformat>Warning: package 'gridExtra' was built under R version 4.4.3</preformat>
+      <preformat>
+Attaching package: 'gridExtra'
+
+The following object is masked from 'package:dplyr':
+
+    combine</preformat>
+      <code language="r script">library(stringr)
+library(cowplot)</code>
+      <preformat>Warning: package 'cowplot' was built under R version 4.4.3</preformat>
+      <preformat>
+Attaching package: 'cowplot'
+
+The following object is masked from 'package:lubridate':
+
+    stamp</preformat>
+      <code language="r script">library(gridExtra)</code>
       <list list-type="order">
         <list-item>
           <p>Create time period for seasons</p>
         </list-item>
       </list>
+      <code language="r script"># Read in all climate data
+AZ_kingman &lt;- read_csv(&quot;data/Climate Data/AZ-kingman-climate.csv&quot;)</code>
+      <preformat>Rows: 345 Columns: 90
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (42): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
+dbl (45): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
+lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">AZ_phoenix &lt;- read_csv(&quot;data/Climate Data/AZ-phoenix-climate.csv&quot;)</code>
+      <preformat>Rows: 319 Columns: 82
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (38): STATION, DATE, NAME, AWND_ATTRIBUTES, CDSD_ATTRIBUTES, CLDD_ATTRIB...
+dbl (41): LATITUDE, LONGITUDE, ELEVATION, AWND, CDSD, CLDD, DP01, DP10, DP1X...
+lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">CA_lake_tahoe &lt;- read_csv(&quot;data/Climate Data/CA-lake-tahoe-climate.csv&quot;)</code>
+      <preformat>Rows: 657 Columns: 96
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (45): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
+dbl (48): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
+lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">CA_sandiego &lt;- read_csv(&quot;data/Climate Data/CA-sandiego-climate.csv&quot;)</code>
+      <preformat>Rows: 849 Columns: 84
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (39): STATION, DATE, NAME, AWND_ATTRIBUTES, CDSD_ATTRIBUTES, CLDD_ATTRIB...
+dbl (42): LATITUDE, LONGITUDE, ELEVATION, AWND, CDSD, CLDD, DP01, DP10, DP1X...
+lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">CA_santarosa &lt;- read_csv(&quot;data/Climate Data/CA-santarosa_climate.csv&quot;)</code>
+      <preformat>Rows: 322 Columns: 96
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (45): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
+dbl (48): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
+lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">OR_chiloquin &lt;- read_csv(&quot;data/Climate Data/OR-chiloquin-climate.csv&quot;)</code>
+      <preformat>Rows: 511 Columns: 68
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (30): STATION, DATE, NAME, CLDD_ATTRIBUTES, DP01_ATTRIBUTES, DP10_ATTRIB...
+dbl (36): LATITUDE, LONGITUDE, ELEVATION, CDSD, CDSD_ATTRIBUTES, CLDD, DP01,...
+lgl  (2): DYFG_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">OR_hermiston &lt;- read_csv(&quot;data/Climate Data/OR-hermiston-climate.csv&quot;)</code>
+      <preformat>Rows: 324 Columns: 82
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (38): STATION, DATE, NAME, AWND_ATTRIBUTES, CDSD_ATTRIBUTES, CLDD_ATTRIB...
+dbl (41): LATITUDE, LONGITUDE, ELEVATION, AWND, CDSD, CLDD, DP01, DP10, DP1X...
+lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">WA_shelton &lt;- read_csv(&quot;data/Climate Data/WA-shelton-climate.csv&quot;)</code>
+      <preformat>Rows: 321 Columns: 96
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (45): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
+dbl (48): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
+lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">WA_spokane &lt;- read_csv(&quot;data/Climate Data/WA-spokane-climate.csv&quot;)</code>
+      <preformat>Rows: 344 Columns: 88
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (41): STATION, DATE, NAME, CLDD_ATTRIBUTES, DP01_ATTRIBUTES, DP10_ATTRIB...
+dbl (45): LATITUDE, LONGITUDE, ELEVATION, CDSD, CDSD_ATTRIBUTES, CLDD, DP01,...
+lgl  (2): DYFG_ATTRIBUTES, DYTS_ATTRIBUTES
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script"># Clarify joining values:
+
+AZ_kingman$LATITUDE &lt;- as.numeric(AZ_kingman$LATITUDE)
+AZ_kingman$LONGITUDE &lt;- as.numeric(AZ_kingman$LONGITUDE)
+
+AZ_phoenix$LATITUDE &lt;- as.numeric(AZ_phoenix$LATITUDE)
+AZ_phoenix$LONGITUDE &lt;- as.numeric(AZ_phoenix$LONGITUDE)
+
+CA_lake_tahoe$LATITUDE &lt;- as.numeric(CA_lake_tahoe$LATITUDE)
+CA_lake_tahoe$LONGITUDE &lt;- as.numeric(CA_lake_tahoe$LONGITUDE)
+
+CA_sandiego$LATITUDE &lt;- as.numeric(CA_sandiego$LATITUDE)
+CA_sandiego$LONGITUDE &lt;- as.numeric(CA_sandiego$LONGITUDE)
+
+CA_santarosa$LATITUDE &lt;- as.numeric(CA_santarosa$LATITUDE)
+CA_santarosa$LONGITUDE &lt;- as.numeric(CA_santarosa$LONGITUDE)
+
+OR_chiloquin$LATITUDE &lt;- as.numeric(OR_chiloquin$LATITUDE)
+OR_chiloquin$LONGITUDE &lt;- as.numeric(OR_chiloquin$LONGITUDE)
+
+OR_hermiston$LATITUDE &lt;- as.numeric(OR_hermiston$LATITUDE)
+OR_hermiston$LONGITUDE &lt;- as.numeric(OR_hermiston$LONGITUDE)
+
+WA_shelton$LATITUDE &lt;- as.numeric(WA_shelton$LATITUDE)
+WA_shelton$LONGITUDE &lt;- as.numeric(WA_shelton$LONGITUDE)
+
+WA_spokane$LATITUDE &lt;- as.numeric(WA_spokane$LATITUDE)
+WA_spokane$LONGITUDE &lt;- as.numeric(WA_spokane$LONGITUDE)
+
+
+#Cleaning Data - the SAGA:
+
+AZ_kingman &lt;- AZ_kingman %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+AZ_phoenix &lt;- AZ_phoenix %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+CA_lake_tahoe &lt;- CA_lake_tahoe %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+CA_sandiego &lt;- CA_sandiego %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+CA_santarosa &lt;- CA_santarosa %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+OR_chiloquin &lt;- OR_chiloquin %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+OR_hermiston &lt;- OR_hermiston %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+WA_shelton &lt;- WA_shelton %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+WA_spokane &lt;- WA_spokane %&gt;%
+  select(-contains(&quot;ATTRIBUTES&quot;))
+
+#Adding to a collective list to make join easier!
+station_list &lt;- list(AZ_kingman, AZ_phoenix, CA_lake_tahoe, CA_sandiego, CA_santarosa, OR_chiloquin, OR_hermiston, WA_shelton, WA_spokane)
+
+
+cleaned_list &lt;- map(station_list, ~ select(.x, -contains(&quot;ATTRIBUTES&quot;)))
+
+
+#Binding the cleaned data!
+climate_data &lt;- bind_rows(cleaned_list)</code>
       <list list-type="alpha-lower">
         <list-item>
           <p>Building Seasons:</p>
         </list-item>
       </list>
+      <code language="r script"># Changing into month and year
+climate_data &lt;- climate_data %&gt;%
+  mutate(
+    DATE = paste0(DATE, &quot;-01&quot;), # Adding a day component since it was missing!
+    DATE = as.Date(DATE, format = &quot;%Y-%m-%d&quot;),
+    year = year(DATE),
+    month = month(DATE)
+  )
+
+
+# Creating seasons:
+climate_data &lt;- climate_data %&gt;%
+  mutate(
+    season = case_when(
+      month %in% c(12, 1, 2)  ~ &quot;Winter&quot;,
+      month %in% c(3, 4, 5)   ~ &quot;Spring&quot;,
+      month %in% c(6, 7, 8)   ~ &quot;Summer&quot;,
+      month %in% c(9, 10, 11) ~ &quot;Fall&quot;
+    ))
+
+
+# Creating seasons with the year to compare for climate
+climate_data &lt;- climate_data %&gt;%
+  mutate(
+    season_year = if_else(month == 12, year + 1, year)
+  )
+
+
+#Separating temp and precp to clean further!
+avg_temp &lt;- climate_data %&gt;%
+  mutate(TAVG_F = (TAVG * 9/5) + 32) %&gt;%
+  group_by(STATION, NAME, month, season, season_year) %&gt;%
+  summarize(avg_temp = mean(TAVG_F, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+  filter(season_year &gt;= 2000, season_year &lt;= 2024)
+
+avg_prec &lt;- climate_data %&gt;%
+  group_by(STATION, NAME, month, season, season_year)%&gt;%
+  summarize(avg_prec = mean(PRCP, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
+  filter(season_year &gt;= 2000, season_year &lt;= 2024)</code>
       <list list-type="order">
         <list-item>
           <label>2.</label>
@@ -292,6 +563,32 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
       each recorded season showing similarities between Fall and Winter
       temperatures and Spring and Summer temperatures for all nine
       weather stations (Fig. 1).</p>
+      <code language="r script">#TEMPERATURE!!!
+
+#creating a separte coordination dataframe
+station_coords &lt;- climate_data %&gt;%
+  select(STATION, LATITUDE, LONGITUDE) %&gt;%
+  distinct()
+
+#joining the two to relay to the map
+avg_temp_map &lt;- avg_temp %&gt;%
+  left_join(station_coords, by = &quot;STATION&quot;)
+
+#loading the u.s. map raster file!
+us_map &lt;- map_data(&quot;state&quot;)
+
+#Creating map of avg temperature for Selected stations based on seasonality!
+
+ggplot(avg_temp_map %&gt;% filter(season_year &gt;= 2000 &amp; season_year &lt;= 2024)) +
+  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
+               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
+  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_temp), size = 2) +
+  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg Temp (°F)&quot;) +
+  coord_fixed(1.3) +
+  facet_wrap(~season) +
+  labs(title = &quot;Seasonal Average Temperatures by Station (2000–2024)&quot;,
+       x = &quot;&quot;, y = &quot;&quot;) +
+  theme_minimal()</code>
       <fig>
         <caption><p>Figure 1: Average seasonal temperatures (°F) at nine
         selected climate stations across Arizona, California, Oregon,
@@ -300,6 +597,43 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
       </fig>
       <p>All seasons but Spring showed several degree increase in
       average temperature from 2000 to 2024 (Fig. 2).</p>
+      <code language="r script"># Let's compare first just what 2000 vs 2024 looks like!
+
+# separating 2000 and 2024
+
+avg_temp_2000 &lt;- avg_temp_map %&gt;% filter(season_year == 2000)
+avg_temp_2024 &lt;- avg_temp_map %&gt;% filter(season_year == 2024)
+
+# Create the ggplot for 2000
+temp_2000 &lt;- ggplot(avg_temp_2000) +
+  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
+               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
+  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_temp), size = 2) +
+  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Temp. (°F)&quot;) +
+  coord_fixed(1.3) +
+  facet_wrap(~season) +
+  labs(title = &quot;Seasonal Average Temperatures (2000)&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;)+
+  theme_minimal()</code>
+      <code language="r script"># Create the ggplot for 2024
+temp_2024 &lt;- ggplot(avg_temp_2024) +
+  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
+               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
+  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_temp), size = 2) +
+  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Temp. (°F)&quot;) +
+  coord_fixed(1.3) +
+  facet_wrap(~season) +
+  labs(title = &quot;Seasonal Average Temperatures (2024)&quot;,
+       x = &quot;&quot;, y = &quot;&quot;) +
+  theme_minimal()</code>
+      <code language="r script"># Arrange them to be side by side!
+
+plot_grid(temp_2000, temp_2024, labels=c(&quot;&quot;, &quot;&quot;), ncol = 1, nrow = 2, widths = c(1), align = &quot;v&quot;)</code>
+      <preformat>Warning in as_grob.default(plot): Cannot convert object of class numeric into a
+grob.</preformat>
+      <preformat>Warning: Graphs cannot be vertically aligned unless the axis parameter is set.
+Placing graphs unaligned.</preformat>
       <fig>
         <caption><p>Figure 2: Average seasonal temperatures (°F) at nine
         selected weather stations across Arizona, California, Oregon,
@@ -319,6 +653,26 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
       for all nine weather stations have no stark difference in patterns
       across all four seasons (Fig. 3), although it is slightly wetter
       across the western coast weather stations.</p>
+      <code language="r script">#PRECIPITATION!!!
+
+#joining the two to relay to the map
+avg_prec_map &lt;- avg_prec %&gt;%
+  left_join(station_coords, by = &quot;STATION&quot;)
+
+#Creating map of avg precipitation for Selected stations based on seasonality!
+
+ggplot(avg_prec_map %&gt;% filter(season_year &gt;= 2000 &amp; season_year &lt;= 2024)) +
+  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
+               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
+  geom_point(data = avg_prec_map %&gt;%
+               filter(season_year &gt;= 2000 &amp; season_year &lt;= 2024),
+             aes(x = LONGITUDE, y = LATITUDE, color = avg_prec), size = 2) +
+  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Prec. (100 μm)&quot;) +
+  coord_fixed(1.3) +
+  facet_wrap(~season) +
+  labs(title = &quot;Seasonal Average Precipitation by Station (2000–2024)&quot;,
+       x = &quot;&quot;, y = &quot;&quot;) +
+  theme_minimal()</code>
       <fig>
         <caption><p>Figure 3: Average seasonal precipitation (100μm) at
         nine selected weather stations across Arizona, California,
@@ -329,6 +683,42 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
       <p>Precipitation in the all four seasons, Winter, Spring, Summer,
       and Fall, has dramatically increased from 2000 to 2024, in the
       nine respective weather stations (Fig. 4).</p>
+      <code language="r script"># Let's compare first just what 2000 vs 2024 looks like!
+
+# separating 2000 and 2024
+
+avg_prec_2000 &lt;- avg_prec_map %&gt;% filter(season_year == 2000)
+avg_prec_2024 &lt;- avg_prec_map %&gt;% filter(season_year == 2024)
+
+# Create the ggplot for 2000
+prec_2000 &lt;- ggplot(avg_prec_2000) +
+  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
+               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
+  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_prec), size = 2) +
+  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Prec. (100 μm)&quot;) +
+  coord_fixed(1.3) +
+  facet_wrap(~season) +
+  labs(title = &quot;Seasonal Average Precipitation (2000)&quot;,
+       x = &quot;&quot;, y = &quot;&quot;) +
+  theme_minimal()</code>
+      <code language="r script"># Create the ggplot for 2024
+prec_2024 &lt;- ggplot(avg_prec_2024) +
+  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
+               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
+  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_prec), size = 2) +
+  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Prec. (100 μm)&quot;) +
+  coord_fixed(1.3) +
+  facet_wrap(~season) +
+  labs(title = &quot;Seasonal Average Precipitation (2024)&quot;,
+       x = &quot;&quot;, y = &quot;&quot;) +
+  theme_minimal()</code>
+      <code language="r script"># Arrange them to be side by side!
+
+plot_grid(prec_2000, prec_2024, labels=c(&quot;&quot;, &quot;&quot;), ncol = 1, nrow = 2, widths = c(1), align = &quot;v&quot;)</code>
+      <preformat>Warning in as_grob.default(plot): Cannot convert object of class numeric into a
+grob.</preformat>
+      <preformat>Warning: Graphs cannot be vertically aligned unless the axis parameter is set.
+Placing graphs unaligned.</preformat>
       <fig>
         <caption><p>Figure 4: Average seasonal precipitation (100μm) at
         nine selected weather stations across Arizona, California,
@@ -347,12 +737,110 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
       region of the U.S. (Arizona, California, Oregon, and Washington).
       Based on the eBird data set variables for understanding migratory
       codes:</p>
+      <code language="r script"># read in bird data:
+
+amebit_data &lt;- read_csv(&quot;data/AB Data/amebit_data.csv&quot;)</code>
+      <preformat>New names:
+• `` -&gt; `...22`
+• `` -&gt; `...23`
+• `` -&gt; `...24`
+• `` -&gt; `...25`
+• `` -&gt; `...26`
+• `` -&gt; `...27`
+• `` -&gt; `...28`
+• `` -&gt; `...29`
+• `` -&gt; `...30`
+• `` -&gt; `...31`
+• `` -&gt; `...32`
+• `` -&gt; `...33`
+• `` -&gt; `...34`
+• `` -&gt; `...35`
+• `` -&gt; `...36`
+• `` -&gt; `...37`
+• `` -&gt; `...38`
+• `` -&gt; `...39`
+• `` -&gt; `...40`
+• `` -&gt; `...41`
+• `` -&gt; `...42`
+• `` -&gt; `...43`
+• `` -&gt; `...44`
+• `` -&gt; `...45`
+• `` -&gt; `...46`
+• `` -&gt; `...47`
+• `` -&gt; `...48`
+• `` -&gt; `...49`
+• `` -&gt; `...50`
+• `` -&gt; `...51`
+• `` -&gt; `...52`
+• `` -&gt; `...53`
+• `` -&gt; `...54`
+• `` -&gt; `...55`</preformat>
+      <preformat>Warning: One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat &lt;- vroom(...)
+  problems(dat)</preformat>
+      <preformat>Rows: 70649 Columns: 55
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr  (20): OBSERVATION DATE, OBSERVATION COUNT, BREEDING CODE, BREEDING CATE...
+dbl   (4): BCR CODE, LATITUDE, LONGITUDE, NUMBER OBSERVERS
+lgl  (30): AGE/SEX, ...22, ...28, ...29, ...30, ...31, ...32, ...33, ...34, ...
+time  (1): TIME OBSERVATIONS STARTED
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
+      <code language="r script">View(amebit_data)
+#I already precleaned it because of how much data there was for the American Bittern, so I don't have to clean it that much!
+
+
+# Cleaning the Data to focus on what we want:
+
+amebit_monthly &lt;- amebit_data %&gt;%
+  mutate(ob_date = mdy(`OBSERVATION DATE`),
+         year = year(ob_date),
+         month = month(ob_date, label = TRUE),
+         state_abb = state.abb[match(STATE, state.name)]
+  ) %&gt;%
+  group_by(year, month, state_abb) %&gt;%
+  summarize(observations = n(), .groups = &quot;drop&quot;) %&gt;%
+  filter(year &gt;= 2000, year &lt;= 2024)</code>
+      <code language="r script">ggplot(amebit_monthly, aes(x = state_abb, y = observations, fill = state_abb)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette = &quot;Set3&quot;,
+                    name = &quot;State Name&quot;,
+                    labels = c(&quot;AZ&quot; = &quot;Arizona&quot;,
+                               &quot;CA&quot; = &quot;California&quot;,
+                               &quot;OR&quot; = &quot;Oregon&quot;,
+                               &quot;WA&quot; = &quot;Washington&quot;)) +
+  labs(title = &quot;Distribution of eBird Bittern Observations by State from 2000 - 2024&quot;,
+       x = &quot;State&quot;,
+       y = &quot;Observation Count&quot;) +
+  theme_minimal()</code>
       <fig>
         <caption><p>Figure 5: Distribution of American Bittern eBird
         observations within Arizona, California, Oregon, and Washington.
         Recorded over 2000-2024.</p></caption>
         <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-13-1.png" />
       </fig>
+      <code language="r script"># Visualize time:
+
+
+amebit_monthly %&gt;%
+  filter(state_abb %in% c(&quot;CA&quot;, &quot;AZ&quot;, &quot;WA&quot;, &quot;OR&quot;)) %&gt;%
+  ggplot(aes(x = month, y = observations, group = year, color = as.factor(year))) +
+  geom_line(alpha = 0.5) +
+  facet_wrap(~ state_abb, ncol = 2) +
+  labs(
+    title = &quot;Seasonal Observation Trends of American Bittern (2000–2024)&quot;,
+    x = &quot;Month&quot;,
+    y = &quot;Number of Observations&quot;,
+    color = &quot;Year&quot;
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(face = &quot;bold&quot;)
+  )</code>
       <fig>
         <caption><p>Figure 6: Observation trends of American Bitterns
         measured monthly from 2000 to 2024 within the four selected
@@ -366,6 +854,48 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
           <p>Looking at seasonal changes over time</p>
         </list-item>
       </list>
+      <code language="r script">annual_summary &lt;- climate_data %&gt;%
+  mutate(
+    TAVG_F = (TAVG * 9/5) + 32,
+    PRCP_mm = PRCP / 10,
+    state_abb = str_extract(NAME, &quot;[A-Z]{2}(?=\\sUS)&quot;)
+  ) %&gt;%
+  filter(state_abb %in% c(&quot;AZ&quot;, &quot;OR&quot;, &quot;WA&quot;, &quot;CA&quot;)) %&gt;%
+  group_by(season_year, season, state_abb) %&gt;%
+  summarize(
+    avg_temp = mean(TAVG_F, na.rm = TRUE),
+    avg_precp = mean(PRCP_mm, na.rm = TRUE),
+    .groups = &quot;drop&quot;
+  ) %&gt;%
+  filter(season_year &gt;= 2000, season_year &lt;= 2024)
+
+# Reshaping to make plotting easier to understand shifts in Temp and Precip!
+
+long_annual &lt;- annual_summary %&gt;%
+  pivot_longer(cols = c(avg_temp, avg_precp),
+               names_to = &quot;variable&quot;, values_to = &quot;value&quot;)
+
+
+# Plotting:
+
+ggplot(long_annual, aes(x = season_year, y = value, color = season)) +
+  geom_line(linewidth = 1) +
+  facet_grid(variable ~ state_abb, scales = &quot;free_y&quot;,
+             labeller = labeller(variable = c(
+               avg_temp = &quot;Avg Temp (°F)&quot;,
+               avg_precp = &quot;Avg Precip (mm)&quot;
+             ))) +
+  theme(panel.spacing = unit(1.2, &quot;lines&quot;)) +
+  scale_x_continuous(breaks = seq(2000, 2024, by = 4)) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  labs(
+    title = &quot;Seasonal Climate Variation by State (2000–2024)&quot;,
+    x = &quot;Year&quot;, y = NULL, color = &quot;Season&quot;
+  ) +
+  scale_color_brewer(palette = &quot;Set1&quot;)</code>
       <fig>
         <caption><p>Figure 7: Seasonal trends of average temperature
         ((°F)) and precipitation (mm) as recorded by the nine weather
@@ -386,6 +916,54 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
       temperature and observation count (Fig. 7). Each point
       representing the yearly average temperature and respective count
       of American Bitterns.</p>
+      <code language="r script"># Relationship between climate and bittern evolving together!
+amebit_seasonal &lt;- amebit_data %&gt;%
+  mutate(
+    ob_date = mdy(`OBSERVATION DATE`),
+    year = year(ob_date),
+    month = month(ob_date),
+    season = case_when(
+      month %in% c(12, 1, 2) ~ &quot;Winter&quot;,
+      month %in% c(3, 4, 5) ~ &quot;Spring&quot;,
+      month %in% c(6, 7, 8) ~ &quot;Summer&quot;,
+      month %in% c(9, 10, 11) ~ &quot;Fall&quot;
+    ),
+    season_year = if_else(month == 12, year + 1, year),
+    state_abb = state.abb[match(STATE, state.name)]
+  ) %&gt;%
+  filter(state_abb %in% c(&quot;CA&quot;, &quot;AZ&quot;, &quot;WA&quot;, &quot;OR&quot;)) %&gt;%
+  group_by(season_year, season, state_abb) %&gt;%
+  summarize(observations = n(), .groups = &quot;drop&quot;) %&gt;%
+  filter(season_year &gt;= 2000, season_year &lt;= 2024)
+
+# Combining all data sets made so far:
+combined_data &lt;- left_join(amebit_seasonal, annual_summary,
+                           by = c(&quot;season_year&quot;, &quot;season&quot;, &quot;state_abb&quot;))
+
+combined_long &lt;- combined_data %&gt;%
+  pivot_longer(cols = c(avg_temp, avg_precp),
+               names_to = &quot;variable&quot;, values_to = &quot;value&quot;)</code>
+      <code language="r script">ggplot(combined_long %&gt;% filter(variable == &quot;avg_temp&quot;), 
+       aes(x = value, y = observations, color = season)) +
+  geom_point(alpha = 0.7) +
+  geom_text(data = combined_long %&gt;%
+              filter(variable == &quot;avg_temp&quot;, season_year %in% c(2000, 2024)),
+            aes(label = season_year),
+            vjust = -0.5, size = 3, show.legend = FALSE) +
+  facet_wrap(~ state_abb, scales = &quot;free_x&quot;) +
+  labs(
+    title = &quot;Seasonal Average Temperature and American Bittern Observations&quot;,
+    x = &quot;Average Temperature (°F)&quot;,
+    y = &quot;Number of Observations&quot;,
+    color = &quot;Season&quot;
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    strip.text = element_text(size = 12),
+    legend.position = &quot;bottom&quot;
+  ) +
+  scale_color_brewer(palette = &quot;Set1&quot;)</code>
       <fig>
         <caption><p>Figure 8: Average temperature of year (2000-2024) in
         relation towards American Bittern observation count faceted by
@@ -403,6 +981,29 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
       precipitation and observation count (Fig. 8). Each point
       representing the yearly average precipitation and respective count
       of American Bitterns.</p>
+      <code language="r script"># Visualize precipitation seasonality and bittern data:
+
+ggplot(combined_long %&gt;% filter(variable == &quot;avg_precp&quot;), 
+       aes(x = value, y = observations, color = season)) +
+  geom_point(alpha = 0.7) +
+  geom_text(data = combined_long %&gt;%
+              filter(variable == &quot;avg_precp&quot;, season_year %in% c(2000, 2024)),
+            aes(label = season_year),
+            vjust = -0.5, size = 3, show.legend = FALSE) +
+  facet_wrap(~ state_abb, scales = &quot;free_x&quot;) +
+  labs(
+    title = &quot;Seasonal Average Precipitation and American Bittern Observations&quot;,
+    x = &quot;Average Precipitation (mm)&quot;,
+    y = &quot;Number of Observations&quot;,
+    color = &quot;Season&quot;
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1),
+    strip.text = element_text(size = 12),
+    legend.position = &quot;bottom&quot;
+  ) +
+  scale_color_brewer(palette = &quot;Set1&quot;)</code>
       <fig>
         <caption><p>Figure 9: Average precipitation (mm) of year
         (2000-2024) in relation towards American Bittern observation
@@ -434,6 +1035,26 @@ draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-
     </sec>
     <sec id="anova-tests">
       <title><bold>ANOVA Tests:</bold></title>
+      <code language="r script"># 1. creating a linear model test
+combined_data$season_year &lt;- as.factor(combined_data$season_year)
+combined_data$state_abb &lt;- as.factor(combined_data$state_abb)
+
+
+lm_mod &lt;- lm(observations ~ avg_temp * season_year + avg_precp * season_year + state_abb, data = combined_data)
+
+library(car)</code>
+      <preformat>Warning: package 'car' was built under R version 4.4.3</preformat>
+      <preformat>Loading required package: carData</preformat>
+      <preformat>Warning: package 'carData' was built under R version 4.4.3</preformat>
+      <preformat>
+Attaching package: 'car'</preformat>
+      <preformat>The following object is masked from 'package:dplyr':
+
+    recode</preformat>
+      <preformat>The following object is masked from 'package:purrr':
+
+    some</preformat>
+      <code language="r script">print(Anova(lm_mod, type = 2))</code>
       <preformat>Anova Table (Type II tests)
 
 Response: observations
@@ -447,6 +1068,17 @@ season_year:avg_precp  371196  24  0.8040 0.7315
 Residuals             5732734 298                   
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</preformat>
+      <code language="r script">library(lme4)</code>
+      <preformat>Warning: package 'lme4' was built under R version 4.4.3</preformat>
+      <preformat>Loading required package: Matrix</preformat>
+      <preformat>
+Attaching package: 'Matrix'</preformat>
+      <preformat>The following objects are masked from 'package:tidyr':
+
+    expand, pack, unpack</preformat>
+      <code language="r script">lmer_mod &lt;- lmer(observations ~ avg_temp + avg_precp + (1 | season_year) + (1 | state_abb), data = combined_data)
+
+print(summary(lmer_mod))</code>
       <preformat>Linear mixed model fit by REML ['lmerMod']
 Formula: observations ~ avg_temp + avg_precp + (1 | season_year) + (1 |  
     state_abb)
@@ -475,6 +1107,16 @@ Correlation of Fixed Effects:
           (Intr) avg_tm
 avg_temp  -0.611       
 avg_precp -0.462  0.635</preformat>
+      <code language="r script">ggplot(combined_data, aes(x = avg_temp, y = observations)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = &quot;lm&quot;, se = TRUE, color = &quot;steelblue1&quot;) +
+  labs(
+    title = &quot;Effect of Average Temperature on Bittern Observations&quot;,
+    x = &quot;Average Temperature (°F)&quot;,
+    y = &quot;American Bittern Observations&quot;
+  ) +
+  theme_minimal()</code>
+      <preformat>`geom_smooth()` using formula = 'y ~ x'</preformat>
       <fig>
         <caption><p>Figure 10: Average temperature (mm) of year
         (2000-2024) effect on American Bittern observation count taken
@@ -484,12 +1126,35 @@ avg_precp -0.462  0.635</preformat>
         interval.</p></caption>
         <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-20-1.png" />
       </fig>
+      <code language="r script">ggplot(combined_data, aes(x = factor(season_year), y = observations)) +
+  geom_boxplot(fill = &quot;dodgerblue&quot;) +
+  labs(title = &quot;Distribution of Observations by Year&quot;,
+       x = &quot;Year&quot;,
+       y = &quot;Observations&quot;) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 35, hjust = 1))</code>
       <fig>
         <caption><p>Figure 11: Interannual variation in American Bittern
         observations from 2000 to 2024. Spread of observations across
         years, highlighting changes over time.</p></caption>
         <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-21-1.png" />
       </fig>
+      <code language="r script">library(ggeffects)</code>
+      <preformat>Warning: package 'ggeffects' was built under R version 4.4.3</preformat>
+      <preformat>
+Attaching package: 'ggeffects'</preformat>
+      <preformat>The following object is masked from 'package:cowplot':
+
+    get_title</preformat>
+      <code language="r script"># Predict marginal effects of temperature
+pred_temp &lt;- ggpredict(lmer_mod, terms = &quot;avg_temp&quot;)
+
+plot(pred_temp) +
+  labs(
+    title = &quot;Predicted Observations vs. Avg Temp (Mixed Model)&quot;,
+    x = &quot;Average Temperature (°F)&quot;,
+    y = &quot;Predicted Observations&quot;
+  )</code>
       <fig>
         <caption><p>Figure 12: Predicted effect of average temperature
         on American Bittern observations from the mixed effects model.
@@ -497,6 +1162,17 @@ avg_precp -0.462  0.635</preformat>
         precipitation, year, and state constant.</p></caption>
         <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-22-1.png" />
       </fig>
+      <code language="r script">library(sjPlot)</code>
+      <preformat>Warning: package 'sjPlot' was built under R version 4.4.3</preformat>
+      <preformat>
+Attaching package: 'sjPlot'</preformat>
+      <preformat>The following objects are masked from 'package:cowplot':
+
+    plot_grid, save_plot</preformat>
+      <code language="r script"># Plot random intercepts for year and state
+plot_model(lmer_mod, type = &quot;re&quot;, sort.est = TRUE, title = &quot;Random Effects: Year and State on Bittern Observations&quot;)</code>
+      <preformat>Sorting each group of random effects ('sort.all') is not possible when 'facets = TRUE'.</preformat>
+      <preformat>Sorting each group of random effects ('sort.all') is not possible when 'facets = TRUE'.</preformat>
       <preformat>[[1]]</preformat>
       <fig>
         <caption><p>Figure 13: Random intercept effects of the year
@@ -570,1404 +1246,5 @@ avg_precp -0.462  0.635</preformat>
 <back>
 </back>
 
-<sub-article article-type="notebook" id="nb-3-nb-article">
-<front-stub>
-<contrib-group>
-<contrib contrib-type="author">
-<name>
-<surname>Colangelo</surname>
-<given-names>Mia</given-names>
-</name>
-<string-name>Mia Colangelo</string-name>
-
-<role vocab="https://credit.niso.org" vocab-term="writing – original
-draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-original-draft/">writing</role>
-<xref ref-type="aff" rid="aff-1-nb-article">a</xref>
-</contrib>
-<contrib contrib-type="author" corresp="yes">
-<name>
-<surname>Morgan</surname>
-<given-names>Neva</given-names>
-</name>
-<string-name>Neva Morgan</string-name>
-
-<role vocab="https://credit.niso.org" vocab-term="writing – original
-draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-original-draft/">writing</role>
-<xref ref-type="aff" rid="aff-1-nb-article">a</xref>
-<xref ref-type="corresp" rid="cor-2-nb-article">&#x002A;</xref>
-</contrib>
-</contrib-group>
-<aff id="aff-1-nb-article">
-<institution-wrap>
-<institution>Colorado State University</institution>
-</institution-wrap>
-
-
-
-
-
-
-
-</aff>
-<author-notes>
-<corresp id="cor-2-nb-article"></corresp>
-</author-notes>
-</front-stub>
-
-<body>
-<sec id="flight-in-flux-analyzing-american-bittern-botaurus-lentiginosus-migration-timing-and-climate-change-nb-article">
-  <title><bold>Flight in Flux:</bold> Analyzing American Bittern
-  (Botaurus lentiginosus) Migration Timing and Climate Change</title>
-  <sec id="introduction-nb-article">
-    <title><bold>Introduction:</bold></title>
-    <p>Climate change poses many questions relating to systems across
-    the globe, especially ecological and evolutionary systems. One
-    system which could potentially be heavily impacted is migration.
-    Bird migration timing is critical for ensuring species survival and
-    ecological balance. As anthropogenic climate change has altered
-    seasonal patterns, there is a potential disruption to migration
-    timing, impacting birds’ breeding success, food availability, and
-    overall population health. The American Bittern (Botaurus
-    lentiginosus), for example, depends on the thriving vegetation of
-    marshlands for camouflage and nesting, as they are known to nest on
-    the ground. Wetland birds are expected to be affected negatively by
-    a considerable margin with the presence of a changing climate
-    altering their regular migratory ranges and patterns (Steen et al.,
-    2012).</p>
-  </sec>
-  <sec id="abstract-nb-article">
-    <title><bold>Abstract:</bold></title>
-    <p>The American Bittern is a solitary, cryptic species that relies
-    on wetlands for breeding and overwintering. Typically, these birds
-    breed in freshwater marshes across Canada and the northern United
-    States before migrating south to the southeastern U.S., Mexico, and
-    Central America for the winter. However, increasing global
-    temperatures, shifts in precipitation, and habitat loss due to
-    climate change threaten to disrupt these migration patterns. Past
-    studies on migratory birds indicate that climate change is leading
-    to earlier spring arrivals, delayed fall departures, and shifts in
-    overall migration routes (La Sorte &amp; Thompson, 2007). For
-    wetland-dependent birds like the American Bittern, changes in water
-    levels due to altered precipitation cycles could further complicate
-    their ability to find suitable stopover sites and breeding grounds.
-    Given that wetlands are already among the most threatened ecosystems
-    in North America, with significant losses due to urbanization and
-    agriculture, climate-induced changes pose an additional challenge
-    (Dahl, 2011). Studying the migration patterns of the American
-    Bittern under a changing climate is essential for predicting future
-    population trends and informing conservation strategies. By
-    understanding how climate variables influence their movements,
-    conservationists can prioritize habitat protection, restoration, and
-    adaptive management to mitigate potential negative impacts.</p>
-  </sec>
-  <sec id="motivation-nb-article">
-    <title><bold>Motivation:</bold></title>
-    <p>Bird migration range and timing is critical for ensuring species
-    survival and ecological balance. However, climate change has altered
-    seasonal patterns, potentially disrupting migration timing and
-    impacting breeding success, food availability, and overall
-    population health. Understanding these shifts can inform
-    conservation strategies and mitigate risks to migratory bird
-    species. Additionally, information gained from analyzing one species
-    can be used to make inferences about the potential shifts in other
-    similar species.</p>
-  </sec>
-  <sec id="data-nb-article">
-    <title><bold>Data:</bold></title>
-    <sec id="climate-data-online-noaa-global-summary-of-the-month---u.s.-specific-nb-article">
-      <title>Climate Data Online (NOAA Global Summary of the Month -
-      U.S. Specific):</title>
-      <p>With NOAA’s Climate Data Online search, we focused on nine
-      weather stations located between Arizona (two weather stations:
-      Phoenix and Kingsman), California (three weather stations: Lake
-      Tahoe, San Diego, and Santa Rosa), Oregon (two weather stations:
-      Chiloquin and Hermiston), and Washington (two weather stations
-      Shelton and Spokane), to map multiple points of migratory status
-      for the American Bittern. The files were requested through eBird,
-      and then downloaded into a readable CSV for Excel to initially
-      portion the data into the portions necessary for our analysis.
-      Each weather station collected data that contained the specific
-      information for the weather station, temperature, precipitation,
-      and wind-related metrics (of which are negligible for our testing
-      metrics).</p>
-      <p>Variables within the Datasets contain:</p>
-      <list list-type="bullet">
-        <list-item>
-          <p>Metadata: Station name (NAME), location (LATITUDE,
-          LONGITUDE, ELEVATION), and observation date (DATE)</p>
-        </list-item>
-        <list-item>
-          <p>Climate Variables: Includes average and extreme
-          temperatures (e.g., ADPT, ASLP, AWBT), precipitation
-          statistics (e.g., DP01, DP10), and wind metrics (AWND)</p>
-        </list-item>
-        <list-item>
-          <p>Attributes and Flags: Columns such as *_ATTRIBUTES and
-          logical flags provide metadata on data quality and source</p>
-        </list-item>
-        <list-item>
-          <p>Format: Character (station info and attribute flags),
-          numeric (climate measures), and logical (indicator
-          variables)</p>
-        </list-item>
-      </list>
-    </sec>
-    <sec id="american-bittern---ebird-data-nb-article">
-      <title>American Bittern - eBird Data:</title>
-      <p>This dataset was sourced from eBird and includes observations
-      of American Bitterns (Botaurus lentiginosus) reported by citizen
-      scientists. The dataset spans from 2000 to 2024 and includes over
-      70,000 observations.</p>
-      <list list-type="bullet">
-        <list-item>
-          <p>Geographic Coverage: Arizona, California, Oregon, and
-          Washington within the U.S.</p>
-        </list-item>
-        <list-item>
-          <p>Metadata: Observation Date Time Observations Started
-          Latitude Longitude</p>
-        </list-item>
-        <list-item>
-          <p>Bird Details: Observation Count Breeding Code Behavior
-          Code</p>
-        </list-item>
-        <list-item>
-          <p>Format: Primarily character and logical columns, with a few
-          numeric fields (e.g., coordinates, observer count)</p>
-        </list-item>
-      </list>
-    </sec>
-  </sec>
-  <sec id="methods-nb-article">
-    <title><bold>Methods</bold></title>
-    <p>To examine the effects climate change will have on the migratory
-    timing of the American Bittern, we used a monthly summary of climate
-    data from nine recorded NOAA weather stations within Arizona,
-    California, Oregon, and Washington and observational data of their
-    abundance within those states from eBird.</p>
-    <sec id="data-acquiring-nb-article">
-      <title>Data Acquiring:</title>
-      <p>Climate data within nine weather stations stretched between
-      Arizona, California, Oregon, and Washington by NOAA Global Monthly
-      Summaries, were recorded on a scale between 1947-2025. By using
-      ‘R’ resources, we cleaned this data, removing unnecessary
-      attributes for our study, converting units to be consistent
-      throughout each dataset, and removing unnecessary data from past
-      years to focus on data between 2000-2024.</p>
-    </sec>
-    <sec id="data-processing-seasonal-aggregation-nb-article">
-      <title>Data Processing / Seasonal Aggregation:</title>
-      <p>Each weather station recorded the seasonal averages of
-      temperature and precipitation, which were then manipulated into a
-      cleaned version of that data, removing unnecessary wind records.
-      With that, we created a list item, using ‘RStudio’, that combined
-      the contents of the dataframes, to join them all together,
-      ensuring columns and the contents of the dataframes are not
-      duplicated or N/Aed. We then integrated a seasonal component into
-      the data denoted by month: Winter = 12 (Dec.), 1 (Jan.), 2 (Feb.);
-      Spring = 3 (Mar.), 4 (Apr.), 5 (May); Summer = 6 (Jun.), 7 (Jul.),
-      8 (Aug.); and Fall = 9 (Sep.), 10 (Oct.), 11 (Nov.). The seasonal
-      component was also applied to the American Bittern migration
-      dataframe, which was later converted to a tibble for later
-      analysis.</p>
-    </sec>
-    <sec id="migratory-timing-analysis-of-american-bittern-nb-article">
-      <title>Migratory Timing Analysis of American Bittern:</title>
-      <p>Observational data was provided to understand the timing of
-      Bitterns within our four selected states, by grouping month and
-      year to understand temporal patterns of their appearance based on
-      the seasonal presence. Using a time series visualization to detect
-      changes within the migratory patterns based on their seasonality
-      between 2000 and 2024.</p>
-    </sec>
-    <sec id="comparing-seasonal-trends-of-climate-variability-and-bittern-observation-nb-article">
-      <title>Comparing Seasonal Trends of Climate Variability and
-      Bittern Observation:</title>
-      <p>To understand the correlation between seasonal changes for all
-      the weather stations, we averaged the temperature and
-      precipitation of each month per year. We then evaluated the
-      long-term changes in bittern observation from plot layouts used
-      before, by visually plotting the changes in the presence of
-      climate seasonality.</p>
-      <p>To evaluate the influence of climate variability on American
-      Bittern observations from 2000 to 2024, we fit a linear mixed
-      effects model using the lmer function from the lme4 package in R.
-      The response variable was the count of observations per year and
-      state. Fixed effects included average temperature (avg_temp) and
-      average precipitation (avg_precp), representing climatic
-      conditions. To account for non-independence among observations
-      across years and states, we included season year and state
-      indicators (AZ, CA, OR, and WA) as random intercepts. This
-      approach allowed us to control for unobserved heterogeneity due to
-      temporal and spatial variation, isolating the effects of climate
-      variables on bird observations. All data and observations were
-      analyzed using RStudio version 2025.05.0 Build 496.</p>
-    </sec>
-  </sec>
-  <sec id="results-nb-article">
-    <title><bold>Results:</bold></title>
-    <sec id="coding-and-figures-nb-article">
-      <title>Coding and Figures:</title>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Beginning Mumbo Jumbo Libraries:
-
-library(flextable) </code>
-      <boxed-text>
-        <preformat>Warning: package 'flextable' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <code language="r script">library(readr) </code>
-      <boxed-text>
-        <preformat>Warning: package 'readr' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <code language="r script">library(tidyverse) </code>
-      <boxed-text>
-        <preformat>Warning: package 'tidyverse' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'ggplot2' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'tidyr' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'purrr' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'dplyr' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'stringr' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'lubridate' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ purrr     1.0.4
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ purrr::compose() masks flextable::compose()
-✖ dplyr::filter()  masks stats::filter()
-✖ dplyr::lag()     masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</preformat>
-      </boxed-text>
-      <code language="r script">library(tidymodels) </code>
-      <boxed-text>
-        <preformat>Warning: package 'tidymodels' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──
-✔ broom        1.0.8     ✔ rsample      1.3.0
-✔ dials        1.4.0     ✔ tune         1.3.0
-✔ infer        1.0.8     ✔ workflows    1.2.0
-✔ modeldata    1.4.0     ✔ workflowsets 1.1.0
-✔ parsnip      1.3.1     ✔ yardstick    1.3.2
-✔ recipes      1.3.0     </preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'broom' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'dials' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'infer' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'parsnip' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'recipes' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'rsample' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'tune' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'workflows' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'yardstick' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
-✖ purrr::compose()  masks flextable::compose()
-✖ scales::discard() masks purrr::discard()
-✖ dplyr::filter()   masks stats::filter()
-✖ recipes::fixed()  masks stringr::fixed()
-✖ dplyr::lag()      masks stats::lag()
-✖ yardstick::spec() masks readr::spec()
-✖ recipes::step()   masks stats::step()</preformat>
-      </boxed-text>
-      <code language="r script">library(ggplot2) 
-library(purrr) 
-library(dplyr) 
-library(lubridate) 
-library(tidyr) 
-library(gridExtra)</code>
-      <boxed-text>
-        <preformat>Warning: package 'gridExtra' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>
-Attaching package: 'gridExtra'
-
-The following object is masked from 'package:dplyr':
-
-    combine</preformat>
-      </boxed-text>
-      <code language="r script">library(stringr)
-library(cowplot)</code>
-      <boxed-text>
-        <preformat>Warning: package 'cowplot' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>
-Attaching package: 'cowplot'
-
-The following object is masked from 'package:lubridate':
-
-    stamp</preformat>
-      </boxed-text>
-      <code language="r script">library(gridExtra)</code>
-      </sec>
-      <list list-type="order">
-        <list-item>
-          <p>Create time period for seasons</p>
-        </list-item>
-      </list>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Read in all climate data
-AZ_kingman &lt;- read_csv(&quot;data/Climate Data/AZ-kingman-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 345 Columns: 90
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (42): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
-dbl (45): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
-lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">AZ_phoenix &lt;- read_csv(&quot;data/Climate Data/AZ-phoenix-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 319 Columns: 82
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (38): STATION, DATE, NAME, AWND_ATTRIBUTES, CDSD_ATTRIBUTES, CLDD_ATTRIB...
-dbl (41): LATITUDE, LONGITUDE, ELEVATION, AWND, CDSD, CLDD, DP01, DP10, DP1X...
-lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">CA_lake_tahoe &lt;- read_csv(&quot;data/Climate Data/CA-lake-tahoe-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 657 Columns: 96
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (45): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
-dbl (48): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
-lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">CA_sandiego &lt;- read_csv(&quot;data/Climate Data/CA-sandiego-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 849 Columns: 84
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (39): STATION, DATE, NAME, AWND_ATTRIBUTES, CDSD_ATTRIBUTES, CLDD_ATTRIB...
-dbl (42): LATITUDE, LONGITUDE, ELEVATION, AWND, CDSD, CLDD, DP01, DP10, DP1X...
-lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">CA_santarosa &lt;- read_csv(&quot;data/Climate Data/CA-santarosa_climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 322 Columns: 96
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (45): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
-dbl (48): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
-lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">OR_chiloquin &lt;- read_csv(&quot;data/Climate Data/OR-chiloquin-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 511 Columns: 68
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (30): STATION, DATE, NAME, CLDD_ATTRIBUTES, DP01_ATTRIBUTES, DP10_ATTRIB...
-dbl (36): LATITUDE, LONGITUDE, ELEVATION, CDSD, CDSD_ATTRIBUTES, CLDD, DP01,...
-lgl  (2): DYFG_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">OR_hermiston &lt;- read_csv(&quot;data/Climate Data/OR-hermiston-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 324 Columns: 82
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (38): STATION, DATE, NAME, AWND_ATTRIBUTES, CDSD_ATTRIBUTES, CLDD_ATTRIB...
-dbl (41): LATITUDE, LONGITUDE, ELEVATION, AWND, CDSD, CLDD, DP01, DP10, DP1X...
-lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">WA_shelton &lt;- read_csv(&quot;data/Climate Data/WA-shelton-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 321 Columns: 96
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (45): STATION, DATE, NAME, ADPT_ATTRIBUTES, ASLP_ATTRIBUTES, ASTP_ATTRIB...
-dbl (48): LATITUDE, LONGITUDE, ELEVATION, ADPT, ASLP, ASTP, AWBT, AWND, CDSD...
-lgl  (3): DYFG_ATTRIBUTES, DYHF_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">WA_spokane &lt;- read_csv(&quot;data/Climate Data/WA-spokane-climate.csv&quot;)</code>
-      <boxed-text>
-        <preformat>Rows: 344 Columns: 88
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (41): STATION, DATE, NAME, CLDD_ATTRIBUTES, DP01_ATTRIBUTES, DP10_ATTRIB...
-dbl (45): LATITUDE, LONGITUDE, ELEVATION, CDSD, CDSD_ATTRIBUTES, CLDD, DP01,...
-lgl  (2): DYFG_ATTRIBUTES, DYTS_ATTRIBUTES
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script"># Clarify joining values:
-
-AZ_kingman$LATITUDE &lt;- as.numeric(AZ_kingman$LATITUDE)
-AZ_kingman$LONGITUDE &lt;- as.numeric(AZ_kingman$LONGITUDE)
-
-AZ_phoenix$LATITUDE &lt;- as.numeric(AZ_phoenix$LATITUDE)
-AZ_phoenix$LONGITUDE &lt;- as.numeric(AZ_phoenix$LONGITUDE)
-
-CA_lake_tahoe$LATITUDE &lt;- as.numeric(CA_lake_tahoe$LATITUDE)
-CA_lake_tahoe$LONGITUDE &lt;- as.numeric(CA_lake_tahoe$LONGITUDE)
-
-CA_sandiego$LATITUDE &lt;- as.numeric(CA_sandiego$LATITUDE)
-CA_sandiego$LONGITUDE &lt;- as.numeric(CA_sandiego$LONGITUDE)
-
-CA_santarosa$LATITUDE &lt;- as.numeric(CA_santarosa$LATITUDE)
-CA_santarosa$LONGITUDE &lt;- as.numeric(CA_santarosa$LONGITUDE)
-
-OR_chiloquin$LATITUDE &lt;- as.numeric(OR_chiloquin$LATITUDE)
-OR_chiloquin$LONGITUDE &lt;- as.numeric(OR_chiloquin$LONGITUDE)
-
-OR_hermiston$LATITUDE &lt;- as.numeric(OR_hermiston$LATITUDE)
-OR_hermiston$LONGITUDE &lt;- as.numeric(OR_hermiston$LONGITUDE)
-
-WA_shelton$LATITUDE &lt;- as.numeric(WA_shelton$LATITUDE)
-WA_shelton$LONGITUDE &lt;- as.numeric(WA_shelton$LONGITUDE)
-
-WA_spokane$LATITUDE &lt;- as.numeric(WA_spokane$LATITUDE)
-WA_spokane$LONGITUDE &lt;- as.numeric(WA_spokane$LONGITUDE)
-
-
-#Cleaning Data - the SAGA:
-
-AZ_kingman &lt;- AZ_kingman %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-AZ_phoenix &lt;- AZ_phoenix %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-CA_lake_tahoe &lt;- CA_lake_tahoe %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-CA_sandiego &lt;- CA_sandiego %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-CA_santarosa &lt;- CA_santarosa %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-OR_chiloquin &lt;- OR_chiloquin %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-OR_hermiston &lt;- OR_hermiston %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-WA_shelton &lt;- WA_shelton %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-WA_spokane &lt;- WA_spokane %&gt;%
-  select(-contains(&quot;ATTRIBUTES&quot;))
-
-#Adding to a collective list to make join easier!
-station_list &lt;- list(AZ_kingman, AZ_phoenix, CA_lake_tahoe, CA_sandiego, CA_santarosa, OR_chiloquin, OR_hermiston, WA_shelton, WA_spokane)
-
-
-cleaned_list &lt;- map(station_list, ~ select(.x, -contains(&quot;ATTRIBUTES&quot;)))
-
-
-#Binding the cleaned data!
-climate_data &lt;- bind_rows(cleaned_list)</code>
-      </sec>
-      <list list-type="alpha-lower">
-        <list-item>
-          <p>Building Seasons:</p>
-        </list-item>
-      </list>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Changing into month and year
-climate_data &lt;- climate_data %&gt;%
-  mutate(
-    DATE = paste0(DATE, &quot;-01&quot;), # Adding a day component since it was missing!
-    DATE = as.Date(DATE, format = &quot;%Y-%m-%d&quot;),
-    year = year(DATE),
-    month = month(DATE)
-  )
-
-
-# Creating seasons:
-climate_data &lt;- climate_data %&gt;%
-  mutate(
-    season = case_when(
-      month %in% c(12, 1, 2)  ~ &quot;Winter&quot;,
-      month %in% c(3, 4, 5)   ~ &quot;Spring&quot;,
-      month %in% c(6, 7, 8)   ~ &quot;Summer&quot;,
-      month %in% c(9, 10, 11) ~ &quot;Fall&quot;
-    ))
-
-
-# Creating seasons with the year to compare for climate
-climate_data &lt;- climate_data %&gt;%
-  mutate(
-    season_year = if_else(month == 12, year + 1, year)
-  )
-
-
-#Separating temp and precp to clean further!
-avg_temp &lt;- climate_data %&gt;%
-  mutate(TAVG_F = (TAVG * 9/5) + 32) %&gt;%
-  group_by(STATION, NAME, month, season, season_year) %&gt;%
-  summarize(avg_temp = mean(TAVG_F, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
-  filter(season_year &gt;= 2000, season_year &lt;= 2024)
-
-avg_prec &lt;- climate_data %&gt;%
-  group_by(STATION, NAME, month, season, season_year)%&gt;%
-  summarize(avg_prec = mean(PRCP, na.rm = TRUE), .groups = &quot;drop&quot;) %&gt;%
-  filter(season_year &gt;= 2000, season_year &lt;= 2024)</code>
-      </sec>
-      <list list-type="order">
-        <list-item>
-          <label>2.</label>
-          <p>Understanding the changes of average temperature and
-          precipitation in a U.S. map!</p>
-        </list-item>
-      </list>
-      <list list-type="alpha-lower">
-        <list-item>
-          <p>Temperature Difference between 2000 - 2024 based on
-          seasonality</p>
-        </list-item>
-      </list>
-      <p>The seasonal average temperature varies respectively within
-      each recorded season showing similarities between Fall and Winter
-      temperatures and Spring and Summer temperatures for all nine
-      weather stations (Fig. 1).</p>
-      <sec specific-use="notebook-content">
-      <code language="r script">#TEMPERATURE!!!
-
-#creating a separte coordination dataframe
-station_coords &lt;- climate_data %&gt;%
-  select(STATION, LATITUDE, LONGITUDE) %&gt;%
-  distinct()
-
-#joining the two to relay to the map
-avg_temp_map &lt;- avg_temp %&gt;%
-  left_join(station_coords, by = &quot;STATION&quot;)
-
-#loading the u.s. map raster file!
-us_map &lt;- map_data(&quot;state&quot;)
-
-#Creating map of avg temperature for Selected stations based on seasonality!
-
-ggplot(avg_temp_map %&gt;% filter(season_year &gt;= 2000 &amp; season_year &lt;= 2024)) +
-  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
-               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
-  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_temp), size = 2) +
-  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg Temp (°F)&quot;) +
-  coord_fixed(1.3) +
-  facet_wrap(~season) +
-  labs(title = &quot;Seasonal Average Temperatures by Station (2000–2024)&quot;,
-       x = &quot;&quot;, y = &quot;&quot;) +
-  theme_minimal()</code>
-      <fig>
-        <caption><p>Figure 1: Average seasonal temperatures (°F) at nine
-        selected climate stations across Arizona, California, Oregon,
-        and Washington from 2000–2024, faceted by season.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-4-1.png" />
-      </fig>
-      </sec>
-      <p>All seasons but Spring showed several degree increase in
-      average temperature from 2000 to 2024 (Fig. 2).</p>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Let's compare first just what 2000 vs 2024 looks like!
-
-# separating 2000 and 2024
-
-avg_temp_2000 &lt;- avg_temp_map %&gt;% filter(season_year == 2000)
-avg_temp_2024 &lt;- avg_temp_map %&gt;% filter(season_year == 2024)
-
-# Create the ggplot for 2000
-temp_2000 &lt;- ggplot(avg_temp_2000) +
-  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
-               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
-  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_temp), size = 2) +
-  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Temp. (°F)&quot;) +
-  coord_fixed(1.3) +
-  facet_wrap(~season) +
-  labs(title = &quot;Seasonal Average Temperatures (2000)&quot;,
-       x = &quot;&quot;,
-       y = &quot;&quot;)+
-  theme_minimal()</code>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Create the ggplot for 2024
-temp_2024 &lt;- ggplot(avg_temp_2024) +
-  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
-               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
-  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_temp), size = 2) +
-  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Temp. (°F)&quot;) +
-  coord_fixed(1.3) +
-  facet_wrap(~season) +
-  labs(title = &quot;Seasonal Average Temperatures (2024)&quot;,
-       x = &quot;&quot;, y = &quot;&quot;) +
-  theme_minimal()</code>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Arrange them to be side by side!
-
-plot_grid(temp_2000, temp_2024, labels=c(&quot;&quot;, &quot;&quot;), ncol = 1, nrow = 2, widths = c(1), align = &quot;v&quot;)</code>
-      <boxed-text>
-        <preformat>Warning in as_grob.default(plot): Cannot convert object of class numeric into a
-grob.</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: Graphs cannot be vertically aligned unless the axis parameter is set.
-Placing graphs unaligned.</preformat>
-      </boxed-text>
-      <fig>
-        <caption><p>Figure 2: Average seasonal temperatures (°F) at nine
-        selected weather stations across Arizona, California, Oregon,
-        and Washington combined to show difference side by side. Faceted
-        by season, featuring 2000 and 2024 temperature
-        data.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-7-1.png" />
-      </fig>
-      </sec>
-      <list list-type="alpha-lower">
-        <list-item>
-          <label>b.</label>
-          <p>Precipitation Difference between 2000 - 2024 based on
-          seasonality</p>
-        </list-item>
-      </list>
-      <p>The precipitation average that is experienced between 2000-2024
-      for all nine weather stations have no stark difference in patterns
-      across all four seasons (Fig. 3), although it is slightly wetter
-      across the western coast weather stations.</p>
-      <sec specific-use="notebook-content">
-      <code language="r script">#PRECIPITATION!!!
-
-#joining the two to relay to the map
-avg_prec_map &lt;- avg_prec %&gt;%
-  left_join(station_coords, by = &quot;STATION&quot;)
-
-#Creating map of avg precipitation for Selected stations based on seasonality!
-
-ggplot(avg_prec_map %&gt;% filter(season_year &gt;= 2000 &amp; season_year &lt;= 2024)) +
-  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
-               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
-  geom_point(data = avg_prec_map %&gt;%
-               filter(season_year &gt;= 2000 &amp; season_year &lt;= 2024),
-             aes(x = LONGITUDE, y = LATITUDE, color = avg_prec), size = 2) +
-  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Prec. (100 μm)&quot;) +
-  coord_fixed(1.3) +
-  facet_wrap(~season) +
-  labs(title = &quot;Seasonal Average Precipitation by Station (2000–2024)&quot;,
-       x = &quot;&quot;, y = &quot;&quot;) +
-  theme_minimal()</code>
-      <fig>
-        <caption><p>Figure 3: Average seasonal precipitation (100μm) at
-        nine selected weather stations across Arizona, California,
-        Oregon, and Washington from 2000–2024, faceted by
-        season.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-8-1.png" />
-      </fig>
-      </sec>
-      <p>Precipitation in the all four seasons, Winter, Spring, Summer,
-      and Fall, has dramatically increased from 2000 to 2024, in the
-      nine respective weather stations (Fig. 4).</p>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Let's compare first just what 2000 vs 2024 looks like!
-
-# separating 2000 and 2024
-
-avg_prec_2000 &lt;- avg_prec_map %&gt;% filter(season_year == 2000)
-avg_prec_2024 &lt;- avg_prec_map %&gt;% filter(season_year == 2024)
-
-# Create the ggplot for 2000
-prec_2000 &lt;- ggplot(avg_prec_2000) +
-  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
-               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
-  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_prec), size = 2) +
-  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Prec. (100 μm)&quot;) +
-  coord_fixed(1.3) +
-  facet_wrap(~season) +
-  labs(title = &quot;Seasonal Average Precipitation (2000)&quot;,
-       x = &quot;&quot;, y = &quot;&quot;) +
-  theme_minimal()</code>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Create the ggplot for 2024
-prec_2024 &lt;- ggplot(avg_prec_2024) +
-  geom_polygon(data = us_map, aes(x = long, y = lat, group = group),
-               fill = &quot;gray90&quot;, color = &quot;white&quot;) +
-  geom_point(aes(x = LONGITUDE, y = LATITUDE, color = avg_prec), size = 2) +
-  scale_color_viridis_c(option = &quot;plasma&quot;, name = &quot;Avg. Prec. (100 μm)&quot;) +
-  coord_fixed(1.3) +
-  facet_wrap(~season) +
-  labs(title = &quot;Seasonal Average Precipitation (2024)&quot;,
-       x = &quot;&quot;, y = &quot;&quot;) +
-  theme_minimal()</code>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Arrange them to be side by side!
-
-plot_grid(prec_2000, prec_2024, labels=c(&quot;&quot;, &quot;&quot;), ncol = 1, nrow = 2, widths = c(1), align = &quot;v&quot;)</code>
-      <boxed-text>
-        <preformat>Warning in as_grob.default(plot): Cannot convert object of class numeric into a
-grob.</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: Graphs cannot be vertically aligned unless the axis parameter is set.
-Placing graphs unaligned.</preformat>
-      </boxed-text>
-      <fig>
-        <caption><p>Figure 4: Average seasonal precipitation (100μm) at
-        nine selected weather stations across Arizona, California,
-        Oregon, and Washington combined to show difference side by side.
-        Faceted by season, featuring 2000 and 2024 precipitation
-        data.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-11-1.png" />
-      </fig>
-      </sec>
-      <list list-type="order">
-        <list-item>
-          <label>3.</label>
-          <p>Bird migration pattern time!</p>
-        </list-item>
-      </list>
-      <p>Based on eBird data, we are focusing in the Western Pacific
-      region of the U.S. (Arizona, California, Oregon, and Washington).
-      Based on the eBird data set variables for understanding migratory
-      codes:</p>
-      <sec specific-use="notebook-content">
-      <code language="r script"># read in bird data:
-
-amebit_data &lt;- read_csv(&quot;data/AB Data/amebit_data.csv&quot;)</code>
-      <boxed-text>
-        <preformat>New names:
-• `` -&gt; `...22`
-• `` -&gt; `...23`
-• `` -&gt; `...24`
-• `` -&gt; `...25`
-• `` -&gt; `...26`
-• `` -&gt; `...27`
-• `` -&gt; `...28`
-• `` -&gt; `...29`
-• `` -&gt; `...30`
-• `` -&gt; `...31`
-• `` -&gt; `...32`
-• `` -&gt; `...33`
-• `` -&gt; `...34`
-• `` -&gt; `...35`
-• `` -&gt; `...36`
-• `` -&gt; `...37`
-• `` -&gt; `...38`
-• `` -&gt; `...39`
-• `` -&gt; `...40`
-• `` -&gt; `...41`
-• `` -&gt; `...42`
-• `` -&gt; `...43`
-• `` -&gt; `...44`
-• `` -&gt; `...45`
-• `` -&gt; `...46`
-• `` -&gt; `...47`
-• `` -&gt; `...48`
-• `` -&gt; `...49`
-• `` -&gt; `...50`
-• `` -&gt; `...51`
-• `` -&gt; `...52`
-• `` -&gt; `...53`
-• `` -&gt; `...54`
-• `` -&gt; `...55`</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: One or more parsing issues, call `problems()` on your data frame for details,
-e.g.:
-  dat &lt;- vroom(...)
-  problems(dat)</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Rows: 70649 Columns: 55
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr  (20): OBSERVATION DATE, OBSERVATION COUNT, BREEDING CODE, BREEDING CATE...
-dbl   (4): BCR CODE, LATITUDE, LONGITUDE, NUMBER OBSERVERS
-lgl  (30): AGE/SEX, ...22, ...28, ...29, ...30, ...31, ...32, ...33, ...34, ...
-time  (1): TIME OBSERVATIONS STARTED
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</preformat>
-      </boxed-text>
-      <code language="r script">View(amebit_data)
-#I already precleaned it because of how much data there was for the American Bittern, so I don't have to clean it that much!
-
-
-# Cleaning the Data to focus on what we want:
-
-amebit_monthly &lt;- amebit_data %&gt;%
-  mutate(ob_date = mdy(`OBSERVATION DATE`),
-         year = year(ob_date),
-         month = month(ob_date, label = TRUE),
-         state_abb = state.abb[match(STATE, state.name)]
-  ) %&gt;%
-  group_by(year, month, state_abb) %&gt;%
-  summarize(observations = n(), .groups = &quot;drop&quot;) %&gt;%
-  filter(year &gt;= 2000, year &lt;= 2024)</code>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script">ggplot(amebit_monthly, aes(x = state_abb, y = observations, fill = state_abb)) +
-  geom_boxplot() +
-  scale_fill_brewer(palette = &quot;Set3&quot;,
-                    name = &quot;State Name&quot;,
-                    labels = c(&quot;AZ&quot; = &quot;Arizona&quot;,
-                               &quot;CA&quot; = &quot;California&quot;,
-                               &quot;OR&quot; = &quot;Oregon&quot;,
-                               &quot;WA&quot; = &quot;Washington&quot;)) +
-  labs(title = &quot;Distribution of eBird Bittern Observations by State from 2000 - 2024&quot;,
-       x = &quot;State&quot;,
-       y = &quot;Observation Count&quot;) +
-  theme_minimal()</code>
-      <fig>
-        <caption><p>Figure 5: Distribution of American Bittern eBird
-        observations within Arizona, California, Oregon, and Washington.
-        Recorded over 2000-2024.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-13-1.png" />
-      </fig>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Visualize time:
-
-
-amebit_monthly %&gt;%
-  filter(state_abb %in% c(&quot;CA&quot;, &quot;AZ&quot;, &quot;WA&quot;, &quot;OR&quot;)) %&gt;%
-  ggplot(aes(x = month, y = observations, group = year, color = as.factor(year))) +
-  geom_line(alpha = 0.5) +
-  facet_wrap(~ state_abb, ncol = 2) +
-  labs(
-    title = &quot;Seasonal Observation Trends of American Bittern (2000–2024)&quot;,
-    x = &quot;Month&quot;,
-    y = &quot;Number of Observations&quot;,
-    color = &quot;Year&quot;
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    strip.text = element_text(face = &quot;bold&quot;)
-  )</code>
-      <fig>
-        <caption><p>Figure 6: Observation trends of American Bitterns
-        measured monthly from 2000 to 2024 within the four selected
-        states: Arizona, California, Oregon, and Washington. Measured by
-        eBird data analysts.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-14-1.png" />
-      </fig>
-      </sec>
-      <list list-type="order">
-        <list-item>
-          <label>4.</label>
-          <p>Looking at seasonal changes over time</p>
-        </list-item>
-      </list>
-      <sec specific-use="notebook-content">
-      <code language="r script">annual_summary &lt;- climate_data %&gt;%
-  mutate(
-    TAVG_F = (TAVG * 9/5) + 32,
-    PRCP_mm = PRCP / 10,
-    state_abb = str_extract(NAME, &quot;[A-Z]{2}(?=\\sUS)&quot;)
-  ) %&gt;%
-  filter(state_abb %in% c(&quot;AZ&quot;, &quot;OR&quot;, &quot;WA&quot;, &quot;CA&quot;)) %&gt;%
-  group_by(season_year, season, state_abb) %&gt;%
-  summarize(
-    avg_temp = mean(TAVG_F, na.rm = TRUE),
-    avg_precp = mean(PRCP_mm, na.rm = TRUE),
-    .groups = &quot;drop&quot;
-  ) %&gt;%
-  filter(season_year &gt;= 2000, season_year &lt;= 2024)
-
-# Reshaping to make plotting easier to understand shifts in Temp and Precip!
-
-long_annual &lt;- annual_summary %&gt;%
-  pivot_longer(cols = c(avg_temp, avg_precp),
-               names_to = &quot;variable&quot;, values_to = &quot;value&quot;)
-
-
-# Plotting:
-
-ggplot(long_annual, aes(x = season_year, y = value, color = season)) +
-  geom_line(linewidth = 1) +
-  facet_grid(variable ~ state_abb, scales = &quot;free_y&quot;,
-             labeller = labeller(variable = c(
-               avg_temp = &quot;Avg Temp (°F)&quot;,
-               avg_precp = &quot;Avg Precip (mm)&quot;
-             ))) +
-  theme(panel.spacing = unit(1.2, &quot;lines&quot;)) +
-  scale_x_continuous(breaks = seq(2000, 2024, by = 4)) +
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  ) +
-  labs(
-    title = &quot;Seasonal Climate Variation by State (2000–2024)&quot;,
-    x = &quot;Year&quot;, y = NULL, color = &quot;Season&quot;
-  ) +
-  scale_color_brewer(palette = &quot;Set1&quot;)</code>
-      <fig>
-        <caption><p>Figure 7: Seasonal trends of average temperature
-        ((°F)) and precipitation (mm) as recorded by the nine weather
-        stations in Arizona, California, Oregon, and Washington.
-        Recorded between 2000 and 2024.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-15-1.png" />
-      </fig>
-      </sec>
-      <list list-type="order">
-        <list-item>
-          <label>5.</label>
-          <p>Let’s combine them to see if there is a difference!</p>
-        </list-item>
-      </list>
-      <p>The correlation graph displays the relationship between average
-      seasonal temperature (°F) and the number of Bittern observations,
-      with separate linear trends plotted for each season. The
-      visualized data reveals distinct seasonal patterns in both
-      temperature and observation count (Fig. 7). Each point
-      representing the yearly average temperature and respective count
-      of American Bitterns.</p>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Relationship between climate and bittern evolving together!
-amebit_seasonal &lt;- amebit_data %&gt;%
-  mutate(
-    ob_date = mdy(`OBSERVATION DATE`),
-    year = year(ob_date),
-    month = month(ob_date),
-    season = case_when(
-      month %in% c(12, 1, 2) ~ &quot;Winter&quot;,
-      month %in% c(3, 4, 5) ~ &quot;Spring&quot;,
-      month %in% c(6, 7, 8) ~ &quot;Summer&quot;,
-      month %in% c(9, 10, 11) ~ &quot;Fall&quot;
-    ),
-    season_year = if_else(month == 12, year + 1, year),
-    state_abb = state.abb[match(STATE, state.name)]
-  ) %&gt;%
-  filter(state_abb %in% c(&quot;CA&quot;, &quot;AZ&quot;, &quot;WA&quot;, &quot;OR&quot;)) %&gt;%
-  group_by(season_year, season, state_abb) %&gt;%
-  summarize(observations = n(), .groups = &quot;drop&quot;) %&gt;%
-  filter(season_year &gt;= 2000, season_year &lt;= 2024)
-
-# Combining all data sets made so far:
-combined_data &lt;- left_join(amebit_seasonal, annual_summary,
-                           by = c(&quot;season_year&quot;, &quot;season&quot;, &quot;state_abb&quot;))
-
-combined_long &lt;- combined_data %&gt;%
-  pivot_longer(cols = c(avg_temp, avg_precp),
-               names_to = &quot;variable&quot;, values_to = &quot;value&quot;)</code>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script">ggplot(combined_long %&gt;% filter(variable == &quot;avg_temp&quot;), 
-       aes(x = value, y = observations, color = season)) +
-  geom_point(alpha = 0.7) +
-  geom_text(data = combined_long %&gt;%
-              filter(variable == &quot;avg_temp&quot;, season_year %in% c(2000, 2024)),
-            aes(label = season_year),
-            vjust = -0.5, size = 3, show.legend = FALSE) +
-  facet_wrap(~ state_abb, scales = &quot;free_x&quot;) +
-  labs(
-    title = &quot;Seasonal Average Temperature and American Bittern Observations&quot;,
-    x = &quot;Average Temperature (°F)&quot;,
-    y = &quot;Number of Observations&quot;,
-    color = &quot;Season&quot;
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 0, hjust = 1),
-    strip.text = element_text(size = 12),
-    legend.position = &quot;bottom&quot;
-  ) +
-  scale_color_brewer(palette = &quot;Set1&quot;)</code>
-      <fig>
-        <caption><p>Figure 8: Average temperature of year (2000-2024) in
-        relation towards American Bittern observation count faceted by
-        seasonality. Each point represents a year ranging from
-        2000-2024, with it’s average temperature measured, by season,
-        and number of recorded American Bittern observations. Recorded
-        within Arizona, California, Oregon, and
-        Washington.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-17-1.png" />
-      </fig>
-      </sec>
-      <p>The correlation graph displays the relationship between average
-      seasonal precipitation (mm) and the number of Bittern
-      observations, with separate linear trends plotted for each season.
-      The visualized data reveals distinct seasonal patterns in both
-      precipitation and observation count (Fig. 8). Each point
-      representing the yearly average precipitation and respective count
-      of American Bitterns.</p>
-      <sec specific-use="notebook-content">
-      <code language="r script"># Visualize precipitation seasonality and bittern data:
-
-ggplot(combined_long %&gt;% filter(variable == &quot;avg_precp&quot;), 
-       aes(x = value, y = observations, color = season)) +
-  geom_point(alpha = 0.7) +
-  geom_text(data = combined_long %&gt;%
-              filter(variable == &quot;avg_precp&quot;, season_year %in% c(2000, 2024)),
-            aes(label = season_year),
-            vjust = -0.5, size = 3, show.legend = FALSE) +
-  facet_wrap(~ state_abb, scales = &quot;free_x&quot;) +
-  labs(
-    title = &quot;Seasonal Average Precipitation and American Bittern Observations&quot;,
-    x = &quot;Average Precipitation (mm)&quot;,
-    y = &quot;Number of Observations&quot;,
-    color = &quot;Season&quot;
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 0, hjust = 1),
-    strip.text = element_text(size = 12),
-    legend.position = &quot;bottom&quot;
-  ) +
-  scale_color_brewer(palette = &quot;Set1&quot;)</code>
-      <fig>
-        <caption><p>Figure 9: Average precipitation (mm) of year
-        (2000-2024) in relation towards American Bittern observation
-        count faceted by seasonality. Each point represents a year
-        ranging from 2000-2024, with it’s average precipitation
-        measured, by season, and number of recorded American Bittern
-        observations. Recorded within Arizona, California, Oregon, and
-        Washington.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-18-1.png" />
-      </fig>
-      </sec>
-      <p>During Winter, average temperatures ranged from approximately
-      37°F to 47°F, with Bittern observations generally below 1,000
-      (Fig. 7). A slight positive trend was noted, suggesting a weak
-      relationship between increasing temperature and higher
-      observations (Fig. 9). In Spring, temperatures were around 50°F to
-      58°F (Fig. 7). Although this season had the highest overall number
-      of Bittern observations—with some counts exceeding 2,000—there was
-      a slight negative trend in the linear fit, indicating that the
-      number of Bittern observations tended to decrease slightly with
-      increasing temperature (Fig. 9). Fall showed a moderate positive
-      trend, with observations increasing alongside temperatures ranging
-      from 52°F to 59°F (Fig. 7). However, overall observations remained
-      lower compared to Spring and Summer (Fig. 7). Summer displayed the
-      strongest positive trend. As temperatures increased from 67°F to
-      74°F, Bittern observations increased significantly (Fig. 9). This
-      season also showed more consistent and clustered high
-      observations, suggesting a stronger relationship between higher
-      temperatures and increased presence of Bitterns (Fig. 9).</p>
-    </sec>
-    <sec id="anova-tests-nb-article">
-      <title><bold>ANOVA Tests:</bold></title>
-      <sec specific-use="notebook-content">
-      <code language="r script"># 1. creating a linear model test
-combined_data$season_year &lt;- as.factor(combined_data$season_year)
-combined_data$state_abb &lt;- as.factor(combined_data$state_abb)
-
-
-lm_mod &lt;- lm(observations ~ avg_temp * season_year + avg_precp * season_year + state_abb, data = combined_data)
-
-library(car)</code>
-      <boxed-text>
-        <preformat>Warning: package 'car' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Loading required package: carData</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Warning: package 'carData' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>
-Attaching package: 'car'</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>The following object is masked from 'package:dplyr':
-
-    recode</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>The following object is masked from 'package:purrr':
-
-    some</preformat>
-      </boxed-text>
-      <code language="r script">print(Anova(lm_mod, type = 2))</code>
-      <boxed-text>
-        <preformat>Anova Table (Type II tests)
-
-Response: observations
-                       Sum Sq  Df F value Pr(&gt;F)    
-avg_temp                45597   1  2.3702 0.1247    
-season_year           6633544  24 14.3678 &lt;2e-16 ***
-avg_precp                2225   1  0.1157 0.7340    
-state_abb             3408960   3 59.0684 &lt;2e-16 ***
-avg_temp:season_year   219475  24  0.4754 0.9840    
-season_year:avg_precp  371196  24  0.8040 0.7315    
-Residuals             5732734 298                   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</preformat>
-      </boxed-text>
-      <code language="r script">library(lme4)</code>
-      <boxed-text>
-        <preformat>Warning: package 'lme4' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Loading required package: Matrix</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>
-Attaching package: 'Matrix'</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>The following objects are masked from 'package:tidyr':
-
-    expand, pack, unpack</preformat>
-      </boxed-text>
-      <code language="r script">lmer_mod &lt;- lmer(observations ~ avg_temp + avg_precp + (1 | season_year) + (1 | state_abb), data = combined_data)
-
-print(summary(lmer_mod))</code>
-      <boxed-text>
-        <preformat>Linear mixed model fit by REML ['lmerMod']
-Formula: observations ~ avg_temp + avg_precp + (1 | season_year) + (1 |  
-    state_abb)
-   Data: combined_data
-
-REML criterion at convergence: 4815.1
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--2.2167 -0.6062 -0.1211  0.4991  4.4588 
-
-Random effects:
- Groups      Name        Variance Std.Dev.
- season_year (Intercept) 17451    132.1   
- state_abb   (Intercept) 14941    122.2   
- Residual                17908    133.8   
-Number of obs: 376, groups:  season_year, 25; state_abb, 4
-
-Fixed effects:
-            Estimate Std. Error t value
-(Intercept)  81.1051    85.1900   0.952
-avg_temp      1.4967     0.8374   1.787
-avg_precp    -0.7658     2.3499  -0.326
-
-Correlation of Fixed Effects:
-          (Intr) avg_tm
-avg_temp  -0.611       
-avg_precp -0.462  0.635</preformat>
-      </boxed-text>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script">ggplot(combined_data, aes(x = avg_temp, y = observations)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = &quot;lm&quot;, se = TRUE, color = &quot;steelblue1&quot;) +
-  labs(
-    title = &quot;Effect of Average Temperature on Bittern Observations&quot;,
-    x = &quot;Average Temperature (°F)&quot;,
-    y = &quot;American Bittern Observations&quot;
-  ) +
-  theme_minimal()</code>
-      <boxed-text>
-        <preformat>`geom_smooth()` using formula = 'y ~ x'</preformat>
-      </boxed-text>
-      <fig>
-        <caption><p>Figure 10: Average temperature (mm) of year
-        (2000-2024) effect on American Bittern observation count taken
-        during that time period, within Arizona, California, Oregon, and
-        Washington. Points represent individual observations, and the
-        blue line shows a linear trend with 95% confidence
-        interval.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-20-1.png" />
-      </fig>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script">ggplot(combined_data, aes(x = factor(season_year), y = observations)) +
-  geom_boxplot(fill = &quot;dodgerblue&quot;) +
-  labs(title = &quot;Distribution of Observations by Year&quot;,
-       x = &quot;Year&quot;,
-       y = &quot;Observations&quot;) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 35, hjust = 1))</code>
-      <fig>
-        <caption><p>Figure 11: Interannual variation in American Bittern
-        observations from 2000 to 2024. Spread of observations across
-        years, highlighting changes over time.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-21-1.png" />
-      </fig>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script">library(ggeffects)</code>
-      <boxed-text>
-        <preformat>Warning: package 'ggeffects' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>
-Attaching package: 'ggeffects'</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>The following object is masked from 'package:cowplot':
-
-    get_title</preformat>
-      </boxed-text>
-      <code language="r script"># Predict marginal effects of temperature
-pred_temp &lt;- ggpredict(lmer_mod, terms = &quot;avg_temp&quot;)
-
-plot(pred_temp) +
-  labs(
-    title = &quot;Predicted Observations vs. Avg Temp (Mixed Model)&quot;,
-    x = &quot;Average Temperature (°F)&quot;,
-    y = &quot;Predicted Observations&quot;
-  )</code>
-      <fig>
-        <caption><p>Figure 12: Predicted effect of average temperature
-        on American Bittern observations from the mixed effects model.
-        Marginal predictions are based on fixed effects, holding
-        precipitation, year, and state constant.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-22-1.png" />
-      </fig>
-      </sec>
-      <sec specific-use="notebook-content">
-      <code language="r script">library(sjPlot)</code>
-      <boxed-text>
-        <preformat>Warning: package 'sjPlot' was built under R version 4.4.3</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>
-Attaching package: 'sjPlot'</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>The following objects are masked from 'package:cowplot':
-
-    plot_grid, save_plot</preformat>
-      </boxed-text>
-      <code language="r script"># Plot random intercepts for year and state
-plot_model(lmer_mod, type = &quot;re&quot;, sort.est = TRUE, title = &quot;Random Effects: Year and State on Bittern Observations&quot;)</code>
-      <boxed-text>
-        <preformat>Sorting each group of random effects ('sort.all') is not possible when 'facets = TRUE'.</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>Sorting each group of random effects ('sort.all') is not possible when 'facets = TRUE'.</preformat>
-      </boxed-text>
-      <boxed-text>
-        <preformat>[[1]]</preformat>
-      </boxed-text>
-      <fig>
-        <caption><p>Figure 13: Random intercept effects of the year
-        [[1]] and state [[2]] on American Bittern observations from the
-        mixed model. Positive values (blue) indicate above-average
-        observation rates relative to the grand mean. Negative values
-        (red) indicative a below-average observation rates relative to
-        the grand mean.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-23-1.png" />
-      </fig>
-      <boxed-text>
-        <preformat>
-[[2]]</preformat>
-      </boxed-text>
-      <fig>
-        <caption><p>Figure 13: Random intercept effects of the year
-        [[1]] and state [[2]] on American Bittern observations from the
-        mixed model. Positive values (blue) indicate above-average
-        observation rates relative to the grand mean. Negative values
-        (red) indicative a below-average observation rates relative to
-        the grand mean.</p></caption>
-        <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/unnamed-chunk-23-2.png" />
-      </fig>
-      </sec>
-    </sec>
-  </sec>
-  <sec id="discussion-nb-article">
-    <title><bold>Discussion:</bold></title>
-    <p>These results suggest that seasonal temperature plays a variable
-    role in Bittern observations, likely reflecting differences in
-    migratory behavior, breeding activity, and habitat use throughout
-    the year.</p>
-    <p>The strong positive trend in Summer may indicate that Bitterns
-    are more active or easier to observe during warmer months,
-    potentially due to breeding activity or greater availability of
-    wetland habitats. Similarly, the positive trend in Fall could
-    reflect pre-migration behavior or favorable foraging conditions as
-    temperatures cool.</p>
-    <p>The Spring season, despite having the highest individual
-    observation counts, showed a slight negative trend. This may reflect
-    a peak in migration or nesting activity occurring at lower spring
-    temperatures, after which observations decline as temperatures
-    rise.</p>
-    <p>Winter observations were consistently low, which aligns with the
-    species’ known migratory behavior—many populations leave colder
-    regions during winter months. The weak positive correlation may
-    suggest that in relatively milder winters, some individuals remain
-    present or return earlier.</p>
-    <p>Overall, this analysis underscores how temperature and
-    seasonality can influence bird detection and presence. Further
-    investigation into habitat variables, precipitation, and food
-    availability could clarify the mechanisms behind these seasonal
-    patterns. Understanding these relationships is especially important
-    in the context of climate change, which may shift seasonal
-    temperature regimes and, in turn, influence Bittern migration and
-    habitat use.</p>
-  </sec>
-  <sec id="references-nb-article">
-    <title><bold>References:</bold></title>
-    <p>Status and trends of wetlands in the conterminous United States
-    2004 to 2009. US Department of the Interior, US Fish and Wildlife
-    Service, Fisheries and Habitat Conservation.</p>
-    <p>eBird. (2025). eBird: An online database of bird distribution and
-    abundance [web application]. eBird, Cornell Lab of Ornithology,
-    Ithaca, New York. Available: http://www.ebird.org. (Accessed: April
-    16, 2025).</p>
-    <p>La Sorte, F. A., &amp; Thompson III, F. R. (2007). Poleward
-    shifts in winter ranges of North American birds. Ecology, 88(7),
-    1803-1812.</p>
-  </sec>
-</sec>
-</body>
-
-
-
-<back>
-</back>
-
-
-</sub-article>
 
 </article>
